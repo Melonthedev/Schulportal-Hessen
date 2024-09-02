@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "Schulportal Hessen (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "Schulportal Hessen (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
