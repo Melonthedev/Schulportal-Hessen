@@ -8,8 +8,11 @@
 	<ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 		<StackPanel x:Name="ContentArea">
 			<TextBlock Margin="8"  FontWeight="SemiBold">Login to Schulportal Hessen:</TextBlock>
-			<TextBlock Margin="8, 8, 8, 0" >School-ID (e.g. 8606):</TextBlock>
-			<TextBox Name="schoolIdInput" PlaceholderText="e.g. 8606" Width="80" HorizontalAlignment="Left" Margin="8" />
+			<TextBlock Margin="8, 8, 8, 0" >School</TextBlock>
+			<AutoSuggestBox TextChanged="AutoSuggestBox_TextChanged" GotFocus="SchoolsList_OnFocus"
+                SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+                Width="250" Margin="8" HorizontalAlignment="Left" AutomationProperties.Name="Basic AutoSuggestBox" PlaceholderText="Select School" />
+			<!--<TextBox Name="schoolIdInput" PlaceholderText="e.g. 8606" Width="80" HorizontalAlignment="Left" Margin="8" />-->
 
 			<TextBox Name="usernameInput" Header="Username" PlaceholderText="Surname.Lastname" Width="250" HorizontalAlignment="Left" Margin="8" />
 			<PasswordBox Name="passworBoxWithRevealmode" Header="Password" Width="250" HorizontalAlignment="Left" Margin="8"
