@@ -8,9 +8,9 @@ using System.Diagnostics;
 
 namespace Schulportal_Hessen.Views;
 
-public sealed partial class MainPage : Page
+public sealed partial class LoginPage : Page
 {
-    public MainViewModel ViewModel
+    public LoginViewModel ViewModel
     {
         get;
     }
@@ -25,9 +25,9 @@ public sealed partial class MainPage : Page
         get;
     }
 
-    public MainPage()
+    public LoginPage()
     {
-        ViewModel = App.GetService<MainViewModel>();
+        ViewModel = App.GetService<LoginViewModel>();
         _AuthService = App.GetService<AuthService>();
         _SpWrapper = App.GetService<SpWrapper>();
         InitializeComponent();
@@ -72,6 +72,6 @@ public sealed partial class MainPage : Page
     private void ClearCredentials_Click(object sender, RoutedEventArgs e)
     {
         _AuthService.DeleteCredentials();
-        
+
     }
 }

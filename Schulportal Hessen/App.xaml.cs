@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Net.Http;
+
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
@@ -73,7 +75,14 @@ public partial class App : Application
             services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
 
+
+            services.AddSingleton<AuthService>();
+            services.AddSingleton<HttpClient>();
+            services.AddSingleton<SpWrapper>();
+
             // Views and ViewModels
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<LoginPage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<ListendetailsViewModel>();

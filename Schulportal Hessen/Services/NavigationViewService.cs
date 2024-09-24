@@ -1,10 +1,12 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.UI.Xaml.Controls;
-
+using Microsoft.UI.Xaml.Input;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Helpers;
 using Schulportal_Hessen.ViewModels;
+using Schulportal_Hessen.Views;
 
 namespace Schulportal_Hessen.Services;
 
@@ -34,6 +36,8 @@ public class NavigationViewService : INavigationViewService
         _navigationView.ItemInvoked += OnItemInvoked;
     }
 
+    
+
     public void UnregisterEvents()
     {
         if (_navigationView != null)
@@ -57,6 +61,8 @@ public class NavigationViewService : INavigationViewService
 
     private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
+        Debug.WriteLine("HJI");
+
         if (args.IsSettingsInvoked)
         {
             _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
@@ -71,6 +77,7 @@ public class NavigationViewService : INavigationViewService
             }
         }
     }
+
 
     private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
     {

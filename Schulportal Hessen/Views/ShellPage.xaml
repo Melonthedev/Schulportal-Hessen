@@ -45,7 +45,7 @@
                 -->
                 <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE80F;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="Shell_Webansicht" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.WebansichtViewModel">
@@ -58,12 +58,35 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf0e2;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Listendetails" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.ListendetailsViewModel">
+                <NavigationViewItem x:Uid="Shell_Listendetails" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.ListendetailsViewModel" >
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xea37;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                
             </NavigationView.MenuItems>
+            <NavigationView.PaneFooter>
+                <StackPanel>
+                    <NavigationViewItem x:Uid="Shell_Login" x:Name="LoginItem" Tapped="LoginItem_Tapped">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B5;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem x:Uid="Shell_Account" x:Name="AccountItem" Tapped="NavigationViewItem_Tapped">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE77B;"/>
+                        </NavigationViewItem.Icon>
+                        <Flyout x:Name="AccountFlyout" >
+                            <StackPanel>
+                                <TextBlock FontSize="15" FontWeight="SemiBold" Margin="8">Jestädt, Marlon (E-FL2)</TextBlock>
+                                <Button HorizontalAlignment="Stretch" Content="Abmelden" Margin="8"/>
+                            </StackPanel>
+                        </Flyout>
+                    </NavigationViewItem>
+                </StackPanel>
+                
+            </NavigationView.PaneFooter>
+            
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
                     <Grid>

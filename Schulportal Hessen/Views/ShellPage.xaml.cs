@@ -11,7 +11,6 @@ using Windows.System;
 
 namespace Schulportal_Hessen.Views;
 
-// TODO: Update NavigationViewItem titles and icons in ShellPage.xaml.
 public sealed partial class ShellPage : Page
 {
     public ShellViewModel ViewModel
@@ -81,5 +80,19 @@ public sealed partial class ShellPage : Page
         var result = navigationService.GoBack();
 
         args.Handled = result;
+    }
+
+    private void NavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+        if (AccountFlyout != null)
+        {
+            AccountFlyout.ShowAt(AccountItem);
+        }
+    }
+
+    private void LoginItem_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+        NavigationFrame.Navigate(typeof(LoginPage));    
+        NavigationViewControl.Header = "Login";
     }
 }

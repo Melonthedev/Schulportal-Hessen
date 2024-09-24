@@ -20,6 +20,7 @@ public class PageService : IPageService
         Configure<InhaltsrasterDetailViewModel, InhaltsrasterDetailPage>();
         Configure<ListendetailsViewModel, ListendetailsPage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<LoginViewModel, LoginPage>();
     }
 
     public Type GetPageType(string key)

@@ -16,10 +16,10 @@ public partial class WebansichtViewModel : ObservableRecipient, INavigationAware
 {
     // TODO: Set the default URL to display.
     [ObservableProperty]
-    private Uri source = new("https://docs.microsoft.com/windows/apps/");
+    private Uri source = new("https://start.schulportal.hessen.de/index.php");
 
     [ObservableProperty]
-    private bool isLoading = true;
+    private bool isLoading = false;
 
     [ObservableProperty]
     private bool hasFailures;

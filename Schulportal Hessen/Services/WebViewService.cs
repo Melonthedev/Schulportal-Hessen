@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
@@ -21,15 +22,25 @@ public class WebViewService : IWebViewService
 
     public event EventHandler<CoreWebView2WebErrorStatus>? NavigationCompleted;
 
-    public WebViewService()
+    private readonly AuthService _authService;
+
+    public WebViewService(AuthService authService)
     {
+        _authService = authService;
     }
 
     [MemberNotNull(nameof(_webView))]
-    public void Initialize(WebView2 webView)
+    public async void Initialize(WebView2 webView)
     {
         _webView = webView;
         _webView.NavigationCompleted += OnWebViewNavigationCompleted;
+        await _webView.EnsureCoreWebView2Async();
+        Debug.WriteLine("WEBVIEWCOREREADDY");
+        _webView.Source = new("https://start.schulportal.hessen.de/index.php");
+        var sessionCookie = _authService.SPHSession;
+        if (string.IsNullOrEmpty(sessionCookie)) return;
+        _webView.CoreWebView2.CookieManager.CreateCookie("SPH-Session", sessionCookie, ".hessen.de", "/");
+        _webView.CoreWebView2.OpenDevToolsWindow();
     }
 
     public void GoBack() => _webView?.GoBack();

@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="Schulportal_Hessen.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+	<ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+		<StackPanel x:Name="ContentArea">
+			<TextBlock Margin="8"  FontWeight="SemiBold">Login to Schulportal Hessen:</TextBlock>
+			<TextBlock Margin="8, 8, 8, 0" >School-ID (e.g. 8606):</TextBlock>
+			<TextBox Name="schoolIdInput" PlaceholderText="e.g. 8606" Width="80" HorizontalAlignment="Left" Margin="8" />
+
+			<TextBox Name="usernameInput" Header="Username" PlaceholderText="Surname.Lastname" Width="250" HorizontalAlignment="Left" Margin="8" />
+			<PasswordBox Name="passworBoxWithRevealmode" Header="Password" Width="250" HorizontalAlignment="Left" Margin="8"
+							PasswordRevealMode="Hidden"
+							AutomationProperties.Name="Sample password box"
+							PlaceholderText="Password"/>
+			<CheckBox Name="revealModeCheckBox" Content="Show password" IsChecked="False" Margin="8, 0"
+						Checked="RevealModeCheckbox_Changed" Unchecked="RevealModeCheckbox_Changed"/>
+			<Button Style="{StaticResource AccentButtonStyle}" Content="Login" Name="LoginButton" Click="LoginButton_Click" Margin="8"/>
+			<ProgressRing Name="LoginWorking" IsActive="False" HorizontalAlignment="Left" Width="30" Height="30" />
+			<TextBlock Name="Username" Margin="8" HorizontalAlignment="Left">Username:</TextBlock>
+				
+				
+			<Button Content="Fetch Infos" Name="FetchInfoButton" Click="FetchInfoButton_Click" Margin="8"/>
+			<TextBlock Name="InfoBox" Margin="8" HorizontalAlignment="Left"></TextBlock>
+			<Button Content="Clear Login Info" Name="ClearCredentials" Click="ClearCredentials_Click" Margin="8"/>
+		</StackPanel>
+	</ScrollViewer>
+</Page>
