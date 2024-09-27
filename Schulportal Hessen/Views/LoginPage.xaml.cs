@@ -25,7 +25,7 @@ public sealed partial class LoginPage : Page
         get;
     }
 
-    public List<(string, int)> schools;
+    public List<(string, int)>? schools = new();
     public int selectedSchool;
 
     public LoginPage()
@@ -35,7 +35,6 @@ public sealed partial class LoginPage : Page
         _SpWrapper = App.GetService<SpWrapper>();
         InitializeComponent();
 
-        Debug.WriteLine("TZEST");
         LoadSchoolIdsAsync();
     }
 
@@ -59,37 +58,35 @@ public sealed partial class LoginPage : Page
     private async void LoginButton_Click(object sender, RoutedEventArgs e)
     {
         LoginWorking.IsActive = true;
+        LoginWorking.Visibility = Visibility.Visible;
 
         Debug.WriteLine(selectedSchool);
         if (selectedSchool != 0)
         {
             _AuthService.SaveSchoolId(selectedSchool.ToString());
-            _AuthService.SaveLoginUrl("https://login.schulportal.hessen.de/?i=" + selectedSchool.ToString());
+            _AuthService.SaveLoginUrl("https://login.schulportal.hessen.de/?i=" + selectedSchool.ToString()); //TODO SAVE NOT HARDCODDED
         }
         if (usernameInput.Text.Length > 1 && passworBoxWithRevealmode.Password.Length > 1) _AuthService.SaveCredentials(usernameInput.Text, passworBoxWithRevealmode.Password);
-        await _AuthService.HandleAuthorizationRequestAsync();
+        var success = await _AuthService.AutoLoginAsync();
+        LoginWorking.Visibility = Visibility.Collapsed;
 
-        var name = await _SpWrapper.GetFullNameAsync();
-        Debug.WriteLine(name);
-        Username.Text += name;
-
-        LoginWorking.IsActive = false;
-        //TODO: Weiterleitung auf home, welcome marlon, login kachel hide, account kachel show, auto startup login, etc
-        this.Frame.Navigate(typeof(MainPage));
+        if (success)
+        {
+            ShellPage.Instance.UpdateLoginStatusUi();
+            Frame.Navigate(typeof(MainPage));
+        } else
+        {
+            if (ErrorInformationText.Text.Length > 0) 
+            {
+                ErrorInformationText.Text = "Login fehlgeschlagen. Wenn du sicher bist, dass die Daten korrekt sind, warte kurz und versuche es erneut.";
+            } else
+            {
+                ErrorInformationText.Text = "Login fehlgeschlagen. Bitte überprüfe die Eingaben.";
+            }
+        }
     }
 
-    private async void FetchInfoButton_Click(object sender, RoutedEventArgs e)
-    {
-        var text = "Geburtstag: " + await _SpWrapper.GetDateOfBirthAsync() + " - Klasse: " + await _SpWrapper.GetSchoolClassAsync();
-        InfoBox.Text = text;
-    }
-
-    private void ClearCredentials_Click(object sender, RoutedEventArgs e)
-    {
-        _AuthService.DeleteCredentials();
-
-    }
-
+    //TODO: Clean Up Implementation
     private async void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
         
@@ -97,7 +94,7 @@ public sealed partial class LoginPage : Page
         // only listen to changes caused by user entering text.
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
         {
-            if (schools.Count <= 0)
+            if (schools == null || schools.Count <= 0)
             {
                 await LoadSchoolIdsAsync();
             }
@@ -146,8 +143,6 @@ public sealed partial class LoginPage : Page
         autoSuggestBox.ItemsSource = schools;
         if (autoSuggestBox.Text == "")
         {
-            Debug.WriteLine("EMPTYTEXT");
-
             autoSuggestBox.IsSuggestionListOpen = true;
             autoSuggestBox.IsFocusEngaged = false;
         }

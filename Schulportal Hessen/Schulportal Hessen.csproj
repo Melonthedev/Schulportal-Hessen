@@ -15,12 +15,6 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\graduation.png" />
-    <Content Remove="Assets\WindowIcon.ico" />
-    <Content Remove="Assets\WindowIconlol.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 

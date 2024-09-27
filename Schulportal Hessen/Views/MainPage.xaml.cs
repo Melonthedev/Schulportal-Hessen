@@ -10,12 +10,13 @@ namespace Schulportal_Hessen.Views;
 
 public sealed partial class MainPage : Page
 {
+
     public MainViewModel ViewModel
     {
         get;
     }
 
-    public AuthService _AuthService
+    public AuthService _authService
     {
         get;
     }
@@ -28,17 +29,25 @@ public sealed partial class MainPage : Page
     public MainPage()
     {
         ViewModel = App.GetService<MainViewModel>();
-        _AuthService = App.GetService<AuthService>();
+        _authService = App.GetService<AuthService>();
         _SpWrapper = App.GetService<SpWrapper>();
+        Loaded += MainPage_Loaded;
         InitializeComponent();
-        LoadContents();
+    }
 
+
+    private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+    {
+        await LoadContents();
     }
 
     public async Task LoadContents()
     {
-        await _SpWrapper.AutoLoginAsync();
-        Debug.WriteLine(_SpWrapper.isLoggedIn + "MAIINOPAE");
-        WelcomeMessage.Text = "Willkommen, " + await _SpWrapper.GetFullNameAsync();
+        if (!await _SpWrapper.AutoLoginAsync())
+        {
+            WelcomeMessage.Text = "Willkommen";
+            return;
+        }
+        WelcomeMessage.Text = "Willkommen, " + await _SpWrapper.GetSurNameAsync();// TODO SAVE AND LOAD OFFLINE (CACHE)
     }
 }

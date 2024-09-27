@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Diagnostics;
+using System.Net.Http;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +18,6 @@ using Schulportal_Hessen.Views;
 
 namespace Schulportal_Hessen;
 
-// To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
 public partial class App : Application
 {
     // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
@@ -49,10 +49,10 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        Host = Microsoft.Extensions.Hosting.Host.
-        CreateDefaultBuilder().
-        UseContentRoot(AppContext.BaseDirectory).
-        ConfigureServices((context, services) =>
+        Host = Microsoft.Extensions.Hosting.Host
+        .CreateDefaultBuilder()
+        .UseContentRoot(AppContext.BaseDirectory)
+        .ConfigureServices((context, services) =>
         {
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
@@ -75,9 +75,8 @@ public partial class App : Application
             services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
 
-
+            services.AddSingleton<NetworkService>();
             services.AddSingleton<AuthService>();
-            services.AddSingleton<HttpClient>();
             services.AddSingleton<SpWrapper>();
 
             // Views and ViewModels
@@ -112,6 +111,12 @@ public partial class App : Application
     {
         // TODO: Log and handle exceptions as appropriate.
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        //Debug.WriteLine(e.Exception.ToString());
+        /*if (e.Exception is HttpRequestException)
+        {
+            App.GetService<NetworkService>().ShowNetworkError();
+            e.Handled = true;
+        }*/
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System.Diagnostics;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
@@ -17,30 +18,71 @@ public sealed partial class ShellPage : Page
     {
         get;
     }
-
-    public ShellPage(ShellViewModel viewModel)
+    public SpWrapper _SpWrapper
     {
+        get;
+    }
+
+    public static ShellPage Instance { get; private set; }
+
+    public ShellPage(ShellViewModel viewModel, SpWrapper spWrapper)
+    {
+        Instance = this;
         ViewModel = viewModel;
+        _SpWrapper = spWrapper;
         InitializeComponent();
 
         ViewModel.NavigationService.Frame = NavigationFrame;
         ViewModel.NavigationViewService.Initialize(NavigationViewControl);
 
-        // TODO: Set the title bar icon by updating /Assets/WindowIcon.ico.
-        // A custom title bar is required for full window theme and Mica support.
-        // https://docs.microsoft.com/windows/apps/develop/title-bar?tabs=winui3#full-customization
         App.MainWindow.ExtendsContentIntoTitleBar = true;
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
         AppTitleBarText.Text = "AppDisplayName".GetLocalized();
     }
 
-    private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private async void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
         TitleBarHelper.UpdateTitleBar(RequestedTheme);
 
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
+        await LoadContents();
+    }
+
+    public async Task LoadContents()
+    {
+        Debug.WriteLine("LoadedddShellpaghe");
+        if (!await _SpWrapper.AutoLoginAsync())
+        {
+            return;
+        }
+        UpdateLoginStatusUi();
+    }
+
+    public async void UpdateLoginStatusUi()
+    {
+        if (_SpWrapper.GetAuthService().isLoggedIn)
+        {
+        
+            LoginItem.Visibility = Visibility.Collapsed;
+            AccountItem.Visibility = Visibility.Visible;
+            AccountItem.Content = await _SpWrapper.GetFullNameAsync();
+            AccountFlyoutNameText.Text = await _SpWrapper.GetFullNameAsync() + " (" + await _SpWrapper.GetSchoolClassAsync() + ")";
+            AccountFlyoutLogoutButton.Click += async (sender, e) =>
+            {
+                await _SpWrapper.LogoutAsync();
+                NavigationFrame.Navigate(typeof(LoginPage));
+                NavigationViewControl.Header = "Login";
+                AccountFlyout.Hide();
+                UpdateLoginStatusUi();
+            };
+        }
+        else
+        {
+            LoginItem.Visibility = Visibility.Visible;
+            AccountItem.Visibility = Visibility.Collapsed;
+        }
     }
 
     private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)

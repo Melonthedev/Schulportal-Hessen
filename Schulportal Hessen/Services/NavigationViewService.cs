@@ -61,8 +61,6 @@ public class NavigationViewService : INavigationViewService
 
     private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
-        Debug.WriteLine("HJI");
-
         if (args.IsSettingsInvoked)
         {
             _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);

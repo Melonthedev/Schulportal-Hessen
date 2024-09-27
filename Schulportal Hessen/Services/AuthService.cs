@@ -7,22 +7,35 @@ namespace Schulportal_Hessen.Services;
 public class AuthService
 {
 
-    private readonly HttpClient _httpClient;
-    public string SPHSession = null;
+    private readonly NetworkService _networkService;
+    public string? SPHSession = null;
+    public bool isLoggedIn = false;
+    public Task<bool>? AutoLoginTask = null;
 
-    public AuthService(HttpClient httpClient)
+    public AuthService(NetworkService networkService)
     {
-        _httpClient = httpClient;
+        _networkService = networkService;
+        AutoLoginTask = AutoLoginAsync();
     }
 
     public async ValueTask<bool> HandleAuthorizationRequestAsync()
     {
         var loginUrl = GetLoginUrl();
-        if (string.IsNullOrEmpty(loginUrl)) return false;
+
+        if (string.IsNullOrEmpty(loginUrl))
+        {
+            return false;
+        }
+
         Debug.WriteLine("Authenticating to " + loginUrl + " ...");
 
         var (username, password) = GetCredentials();
-        if (username == null || password == null) return false;
+
+        if (username == null || password == null)
+        {
+            return false;
+        }
+
         var user = GetSchoolId() + "." + username;
         var postData = new FormUrlEncodedContent(new[]
         {
@@ -33,34 +46,67 @@ public class AuthService
         });
 
         // 1. GET SID REQUEST
-        HttpResponseMessage responseSIDReq = await _httpClient.PostAsync(loginUrl, postData);
-        if (!responseSIDReq.Headers.Contains("Set-Cookie")) return false;
+        var responseSIDReq = await _networkService.PostAsync(loginUrl, postData);
+        if (!responseSIDReq.Headers.Contains("Set-Cookie")) {
+            return false;
+        }
         var cookies = responseSIDReq.Headers.GetValues("Set-Cookie");
-        _httpClient.DefaultRequestHeaders.Add("Cookie", string.Join(";", cookies));
+        _networkService.GetHttpClient().DefaultRequestHeaders.Add("Cookie", string.Join(";", cookies));
 
-        HttpResponseMessage responseLoginReq = await _httpClient.PostAsync(loginUrl, postData);
-        if (!responseLoginReq.Headers.Contains("Set-Cookie")) return false;
+        // 2. LOGIN REQUEST
+        var responseLoginReq = await _networkService.PostAsync(loginUrl, postData);
+        if (!responseLoginReq.Headers.Contains("Set-Cookie")) {
+            return false;
+        }
         var loginCookies = responseLoginReq.Headers.GetValues("Set-Cookie");
-        _httpClient.DefaultRequestHeaders.Add("Cookie", string.Join(";", loginCookies));
+        _networkService.GetHttpClient().DefaultRequestHeaders.Add("Cookie", string.Join(";", loginCookies));
 
-        foreach (var cookie in _httpClient.DefaultRequestHeaders.GetValues("Cookie"))
+        foreach (var cookie in _networkService.GetHttpClient().DefaultRequestHeaders.GetValues("Cookie"))
         {
-            //Debug.WriteLine($"Cookie: {cookie}");
             if (cookie.Contains("SPH-Session"))
             {
                 var sessionCookie = cookie.Split(';')[0];
                 SPHSession = sessionCookie.Split('=')[1];
-                Debug.WriteLine($"Session Cookie: {SPHSession}");
+                Debug.WriteLine($"Obtained Session Cookie: {SPHSession}");
+                break;
             }
         }
 
-        var content2 = await responseLoginReq.Content.ReadAsStringAsync();
-        Debug.WriteLine(content2);
-        Debug.WriteLine(loginCookies.ToString());
-        Debug.WriteLine(responseLoginReq.StatusCode);
+        var html = await responseLoginReq.Content.ReadAsStringAsync();
+        Debug.WriteLine(html);
+        Debug.WriteLine("Login Response: " + responseLoginReq.StatusCode);
 
         return true;
     }
+
+    public async Task<bool> AutoLoginAsync()
+    {
+        if (AutoLoginTask != null && !AutoLoginTask.IsCompleted)
+        {
+            return await AutoLoginTask;
+        }
+        if (isLoggedIn)
+        {
+            return true;
+        }
+        isLoggedIn = await HandleAuthorizationRequestAsync();
+        Debug.WriteLine(isLoggedIn ? "Logged in successfully" : "Login failed");
+        AutoLoginTask = null;
+        return isLoggedIn;
+    }
+
+    public async Task LogoutAsync()
+    {
+        var responseLogout = await _networkService.GetAsync("https://login.schulportal.hessen.de/?logout=1");
+        Debug.WriteLine($"{responseLogout.StatusCode}");
+        _networkService.GetHttpClient().DefaultRequestHeaders.Remove("Cookie");
+        isLoggedIn = false;
+        _networkService.ResetHttpClient();
+        DeleteCredentials();
+        Debug.WriteLine("Logged out successfully");
+        return;
+    }
+
 
     public void SaveCredentials(string username, string password)
     {

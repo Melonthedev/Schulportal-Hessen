@@ -9,26 +9,19 @@
 		<StackPanel x:Name="ContentArea">
 			<TextBlock Margin="8"  FontWeight="SemiBold">Login to Schulportal Hessen:</TextBlock>
 			<TextBlock Margin="8, 8, 8, 0" >School</TextBlock>
-			<AutoSuggestBox TextChanged="AutoSuggestBox_TextChanged" GotFocus="SchoolsList_OnFocus"
+            <AutoSuggestBox TextChanged="AutoSuggestBox_TextChanged" GotFocus="SchoolsList_OnFocus"
                 SuggestionChosen="AutoSuggestBox_SuggestionChosen"
                 Width="250" Margin="8" HorizontalAlignment="Left" AutomationProperties.Name="Basic AutoSuggestBox" PlaceholderText="Select School" />
-			<!--<TextBox Name="schoolIdInput" PlaceholderText="e.g. 8606" Width="80" HorizontalAlignment="Left" Margin="8" />-->
-
-			<TextBox Name="usernameInput" Header="Username" PlaceholderText="Surname.Lastname" Width="250" HorizontalAlignment="Left" Margin="8" />
+            <TextBox Name="usernameInput" Header="Username" PlaceholderText="Surname.Lastname" Width="250" HorizontalAlignment="Left" Margin="8" />
 			<PasswordBox Name="passworBoxWithRevealmode" Header="Password" Width="250" HorizontalAlignment="Left" Margin="8"
 							PasswordRevealMode="Hidden"
 							AutomationProperties.Name="Sample password box"
 							PlaceholderText="Password"/>
 			<CheckBox Name="revealModeCheckBox" Content="Show password" IsChecked="False" Margin="8, 0"
 						Checked="RevealModeCheckbox_Changed" Unchecked="RevealModeCheckbox_Changed"/>
-			<Button Style="{StaticResource AccentButtonStyle}" Content="Login" Name="LoginButton" Click="LoginButton_Click" Margin="8"/>
-			<ProgressRing Name="LoginWorking" IsActive="False" HorizontalAlignment="Left" Width="30" Height="30" />
-			<TextBlock Name="Username" Margin="8" HorizontalAlignment="Left">Username:</TextBlock>
-				
-				
-			<Button Content="Fetch Infos" Name="FetchInfoButton" Click="FetchInfoButton_Click" Margin="8"/>
-			<TextBlock Name="InfoBox" Margin="8" HorizontalAlignment="Left"></TextBlock>
-			<Button Content="Clear Login Info" Name="ClearCredentials" Click="ClearCredentials_Click" Margin="8"/>
-		</StackPanel>
+			<Button Style="{StaticResource AccentButtonStyle}" Content="Login" Name="LoginButton" Click="LoginButton_Click" Margin="8" IsEnabled="false"/>
+			<ProgressRing Name="LoginWorking" IsActive="False" HorizontalAlignment="Left" Width="30" Height="30" Visibility="Collapsed" />
+            <TextBlock x:Name="ErrorInformationText" Foreground="Red" Margin="8"></TextBlock>
+        </StackPanel>
 	</ScrollViewer>
 </Page>

@@ -10,31 +10,40 @@ using Schulportal_Hessen.Services;
 namespace Schulportal_Hessen.Helpers;
 public class SpWrapper
 {
-    private readonly HttpClient _httpClient;
+    private readonly NetworkService _networkService;
     private readonly AuthService _authService;
-    public bool isLoggedIn = false;
 
-    public SpWrapper(HttpClient httpClient, AuthService authService)
+    public SpWrapper(NetworkService networkService, AuthService authService)
     {
-        _httpClient = httpClient;
+        _networkService = networkService;
         _authService = authService;
-        //AutoLoginAsync();
     }
 
-    public async Task<string> GetHtmlAsync(string url)
+    public async Task<bool> AutoLoginAsync()
     {
-           var response = await _httpClient.GetAsync(url);
-           response.EnsureSuccessStatusCode();
-           return await response.Content.ReadAsStringAsync();
+        return await _authService.AutoLoginAsync();
     }
 
-
-    public async Task AutoLoginAsync()
+    public AuthService GetAuthService()
     {
-        if (isLoggedIn) return;
-        isLoggedIn = await _authService.HandleAuthorizationRequestAsync();
-        Debug.WriteLine(isLoggedIn);
-        Debug.WriteLine(await GetFullNameAsync());
+    
+        return _authService;
+    }
+
+    public async Task LogoutAsync()
+    {
+        await _authService.LogoutAsync();
+        return;
+    }
+
+    public async Task<string?> GetHtmlAsync(string url)
+    {
+        var response = await _networkService.GetAsync(url);
+        if (!response.IsSuccessStatusCode)
+        {
+            _networkService.ShowNetworkError();
+        }
+        return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<List<(string, int)>?> GetSchoolIdsAsync()
@@ -43,6 +52,7 @@ public class SpWrapper
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
         var schoolList = doc.DocumentNode.SelectSingleNode("//*[@id=\"accordion\"]");
+        if (schoolList == null) { return null; }
 
         var nodes = schoolList.SelectNodes("//div[@class='list-group']/a");
         if (nodes == null || nodes.Count == 0) { return null; }
@@ -53,10 +63,8 @@ public class SpWrapper
         {
             // Extrahiere den Schulnamen (innerer Text des <a> Tags ohne <small>)
             var schoolName = node.SelectSingleNode(".//text()[normalize-space()]").InnerText.Trim();
-
             // Extrahiere die Schul-ID aus dem data-id Attribut
             var schoolId = node.GetAttributeValue("data-id", "");
-
             // Füge den Namen und die ID zur Liste hinzu
             schools.Add((schoolName, int.Parse(schoolId)));
         }   
@@ -73,6 +81,17 @@ public class SpWrapper
         var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[3]/td[2]");
         if (nachname == null || vorname == null) return null;
         var name = vorname.InnerText + " " + nachname.InnerText;
+        return name;
+    }
+
+    public async Task<string?> GetSurNameAsync()
+    {
+        var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[3]/td[2]");
+        if (vorname == null) return null;
+        var name = vorname.InnerText;
         return name;
     }
 
