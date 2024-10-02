@@ -45,4 +45,10 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <PRIResource Update="Strings\de-de\Resources.resw">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </PRIResource>
+  </ItemGroup>
 </Project>
