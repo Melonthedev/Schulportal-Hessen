@@ -76,6 +76,7 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             services.AddSingleton<NetworkService>();
+            services.AddSingleton<ErrorService>();
             services.AddSingleton<AuthService>();
             services.AddSingleton<SpWrapper>();
 
@@ -96,6 +97,9 @@ public partial class App : Application
             services.AddTransient<MainPage>();
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
+            services.AddTransient<TimetableViewModel>();
+            services.AddTransient<TimetablePage>();
+
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

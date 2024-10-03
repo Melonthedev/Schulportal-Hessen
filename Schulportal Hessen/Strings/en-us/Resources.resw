@@ -218,4 +218,7 @@
   <data name="Shell_Login.Content" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="Shell_Timetable.Content" xml:space="preserve">
+    <value>Timetable</value>
+  </data>
 </root>

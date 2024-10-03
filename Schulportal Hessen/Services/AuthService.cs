@@ -12,6 +12,11 @@ public class AuthService
     public bool isLoggedIn = false;
     public Task<bool>? AutoLoginTask = null;
 
+    public event Action OnLogin;
+    public event Action OnLoggedIn;
+    public event Action OnLogout;
+
+
     public AuthService(NetworkService networkService)
     {
         _networkService = networkService;
@@ -75,7 +80,7 @@ public class AuthService
         var html = await responseLoginReq.Content.ReadAsStringAsync();
         Debug.WriteLine(html);
         Debug.WriteLine("Login Response: " + responseLoginReq.StatusCode);
-
+        OnLogin?.Invoke();
         return true;
     }
 
@@ -92,6 +97,10 @@ public class AuthService
         isLoggedIn = await HandleAuthorizationRequestAsync();
         Debug.WriteLine(isLoggedIn ? "Logged in successfully" : "Login failed");
         AutoLoginTask = null;
+        if (isLoggedIn)
+        {
+            OnLoggedIn?.Invoke();
+        }
         return isLoggedIn;
     }
 
@@ -104,6 +113,7 @@ public class AuthService
         _networkService.ResetHttpClient();
         DeleteCredentials();
         Debug.WriteLine("Logged out successfully");
+        OnLogout?.Invoke();
         return;
     }
 

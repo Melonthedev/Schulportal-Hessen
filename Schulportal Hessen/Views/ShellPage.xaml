@@ -11,19 +11,54 @@
 
     <Grid>
         <Grid x:Name="AppTitleBar"
-              Canvas.ZIndex="1"
+              Canvas.ZIndex="10"
               Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
               IsHitTestVisible="True"
               VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
+                <ColumnDefinition x:Name="IconColumn" Width="Auto"/>
+                <ColumnDefinition x:Name="TitleColumn" Width="Auto"/>
+                <ColumnDefinition x:Name="LeftDragColumn" Width="*"/>
+                <ColumnDefinition x:Name="SearchColumn" Width="4*" MinWidth="220"/>
+                <ColumnDefinition x:Name="RightDragColumn" Width="*" MinWidth="48"/>
+                <ColumnDefinition x:Name="AccountColumn" Width="Auto"/>
+                <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
+            </Grid.ColumnDefinitions>
             <Image Source="/Assets/WindowIcon.ico"
                    HorizontalAlignment="Left"
                    Width="16"
-                   Height="16" />
+                   Height="16"
+                   Grid.Column="1"/>
             <TextBlock x:Name="AppTitleBarText"
                        VerticalAlignment="Center"
                        TextWrapping="NoWrap"
                        Style="{StaticResource CaptionTextBlockStyle}"
-                       Margin="28,0,0,0"/>
+                       Margin="12,0,0,0"
+                       Grid.Column="2"/>
+
+            <!--<AutoSuggestBox x:Name="TitleBarSearchBox" 
+                    Grid.Column="4" 
+                    QueryIcon="Find"
+                    PlaceholderText="Search"
+                    VerticalAlignment="Center"
+                    MaxWidth="600"/>-->
+
+            <Button x:Name="ConnectionStatusButton" Visibility="Collapsed" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xEA6A;" />
+                    <!--<FontIcon Glyph="&#xEB5E;" />-->
+                    <TextBlock x:Name="ConnectionStatusButtonText" Margin="10,0,0,0">No Connection</TextBlock>
+                </StackPanel>
+                <Button.Flyout>
+                    <Flyout x:Name="ConnectionStatusFlyout">
+                        <StackPanel>
+                            <TextBlock FontSize="15" FontWeight="SemiBold" Margin="8" x:Name="ConnectionStatusFlyoutText" TextAlignment="Center">Offline Mode active. Synchronisation is paused.</TextBlock>
+                            <Button HorizontalAlignment="Left" Content="Reconnect" Margin="8" x:Name="ConnectionStatusFlyoutReconnectButton"/>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
         </Grid>
         <NavigationView
             x:Name="NavigationViewControl"
@@ -36,33 +71,48 @@
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
             <NavigationView.MenuItems>
+                
                 <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE80F;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+
+                <NavigationViewItem x:Uid="Shell_Webansicht" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.WebansichtViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE7BC;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
                 <NavigationViewItem x:Uid="Shell_Webansicht" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.WebansichtViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe774;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                
                 <NavigationViewItem x:Uid="Shell_Inhaltsraster" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.InhaltsrasterViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf0e2;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                
                 <NavigationViewItem x:Uid="Shell_Listendetails" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.ListendetailsViewModel" >
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xea37;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 
+                <NavigationViewItem x:Uid="Shell_Timetable" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.TimetableViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe80a;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <StackPanel>
-                    <NavigationViewItem x:Uid="Shell_Login" x:Name="LoginItem" Tapped="LoginItem_Tapped">
+                    <NavigationViewItem x:Uid="Shell_Login" x:Name="LoginItem" Tapped="LoginItem_Tapped" >
                         <NavigationViewItem.Icon>
-                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B5;" />
+                            <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B5;"/>
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                     <NavigationViewItem x:Uid="Shell_Account" x:Name="AccountItem" Tapped="NavigationViewItem_Tapped" Visibility="Collapsed">
@@ -107,5 +157,13 @@
                 <Frame x:Name="NavigationFrame" />
             </Grid>
         </NavigationView>
+        <InfoBar x:Name="ErrorInfoBar"
+             Title="Error"
+             Message="Something went wrong!"
+             IsOpen="False"
+             Severity="Error"
+             Margin="10"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Bottom"/>
     </Grid>
 </Page>

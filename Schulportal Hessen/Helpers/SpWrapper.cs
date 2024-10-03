@@ -46,6 +46,8 @@ public class SpWrapper
         return await response.Content.ReadAsStringAsync();
     }
 
+
+    // TODO: Save XPaths in config
     public async Task<List<(string, int)>?> GetSchoolIdsAsync()
     {
         var html = await GetHtmlAsync("https://start.schulportal.hessen.de/index.php");

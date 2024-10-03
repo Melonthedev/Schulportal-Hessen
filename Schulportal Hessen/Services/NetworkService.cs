@@ -15,8 +15,12 @@ public class NetworkService
         get; private set;
     }
 
-    public NetworkService()
+    private readonly ErrorService _errorService;
+    public event Action<bool> OnConnectionStatusChanged;
+
+    public NetworkService(ErrorService errorService)
     {
+        _errorService = errorService;
         _httpClient = new HttpClient();
     }
 
@@ -34,11 +38,18 @@ public class NetworkService
     {
         try
         {
-            return await _httpClient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request);
+            if (response.IsSuccessStatusCode && IsOffline)
+            {
+                IsOffline = false;
+                OnConnectionStatusChanged?.Invoke(IsOffline);
+            }
+            return response;
         }
-        catch (HttpRequestException ex) when (ex.Message.Contains("No such host is known"))
+        catch (HttpRequestException) //when (ex.Message.Contains("No such host is known"))
         {
             IsOffline = true;
+            OnConnectionStatusChanged?.Invoke(IsOffline);
             return new HttpResponseMessage(0);
         }
         catch (Exception ex)
@@ -50,7 +61,8 @@ public class NetworkService
 
     public void ShowNetworkError()
     {
-        App.MainWindow.ShowMessageDialogAsync("Please reconnect to the internet.", "No Connection");
+        //App.MainWindow.ShowMessageDialogAsync("Please reconnect to the internet.", "No Connection");
+        _errorService.TriggerError("Please reconnect to the internet.", "No Connection");
     }
 
     private void HandleUnexpectedError(Exception ex)

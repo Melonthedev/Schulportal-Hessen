@@ -21,6 +21,7 @@ public class PageService : IPageService
         Configure<ListendetailsViewModel, ListendetailsPage>();
         Configure<SettingsViewModel, SettingsPage>();
         Configure<LoginViewModel, LoginPage>();
+        Configure<TimetableViewModel, TimetablePage>();
     }
 
     public Type GetPageType(string key)

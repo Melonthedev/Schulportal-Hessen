@@ -72,7 +72,7 @@ public sealed partial class LoginPage : Page
 
         if (success)
         {
-            ShellPage.Instance.UpdateLoginStatusUi();
+            //ShellPage.Instance.UpdateLoginStatusUi();
             Frame.Navigate(typeof(MainPage));
         } else
         {
