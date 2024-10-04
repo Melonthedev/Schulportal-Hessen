@@ -101,15 +101,10 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xea37;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                
+
                 <NavigationViewItem x:Uid="Shell_Timetable" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.TimetableViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe80a;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_SettingsCardSample" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.SettingsCardSampleViewModel">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
