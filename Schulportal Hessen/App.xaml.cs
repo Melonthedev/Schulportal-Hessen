@@ -85,8 +85,8 @@ public partial class App : Application
             services.AddTransient<LoginPage>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
-            services.AddTransient<ListendetailsViewModel>();
-            services.AddTransient<ListendetailsPage>();
+            services.AddTransient<ChatsViewModel>();
+            services.AddTransient<ChatsPage>();
             services.AddTransient<InhaltsrasterDetailViewModel>();
             services.AddTransient<InhaltsrasterDetailPage>();
             services.AddTransient<InhaltsrasterViewModel>();
@@ -99,7 +99,10 @@ public partial class App : Application
             services.AddTransient<ShellViewModel>();
             services.AddTransient<TimetableViewModel>();
             services.AddTransient<TimetablePage>();
-
+            services.AddTransient<CoursesViewModel>();
+            services.AddTransient<CoursesPage>();
+            services.AddTransient<SubstitutionsViewModel>();
+            services.AddTransient<SubstitutionsPage>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

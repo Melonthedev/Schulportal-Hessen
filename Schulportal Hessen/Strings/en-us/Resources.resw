@@ -168,8 +168,8 @@
   <data name="Listendetails_NoSelection.Text" xml:space="preserve">
     <value>Select an item from the list.</value>
   </data>
-  <data name="Shell_Listendetails.Content" xml:space="preserve">
-    <value>Listendetails</value>
+  <data name="Shell_Chats.Content" xml:space="preserve">
+    <value>Chats</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
@@ -221,7 +221,25 @@
   <data name="Shell_Timetable.Content" xml:space="preserve">
     <value>Timetable</value>
   </data>
-  <data name="Shell_SettingsCardSample.Content" xml:space="preserve">
-    <value>SettingsCardSample</value>
+  <data name="Shell_Courses.Content" xml:space="preserve">
+    <value>Courses</value>
+  </data>
+  <data name="Shell_Substitutions.Content" xml:space="preserve">
+    <value>Substitutions</value>
+  </data>
+  <data name="Timetable_Monday.Text" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="Timetable_Tuesday.Text" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="Timetable_Wednesday.Text" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Timetable_Thursday.Text" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="Timetable_Friday.Text" xml:space="preserve">
+    <value>Friday</value>
   </data>
 </root>

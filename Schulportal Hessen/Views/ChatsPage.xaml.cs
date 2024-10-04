@@ -6,16 +6,16 @@ using Schulportal_Hessen.ViewModels;
 
 namespace Schulportal_Hessen.Views;
 
-public sealed partial class ListendetailsPage : Page
+public sealed partial class ChatsPage : Page
 {
-    public ListendetailsViewModel ViewModel
+    public ChatsViewModel ViewModel
     {
         get;
     }
 
-    public ListendetailsPage()
+    public ChatsPage()
     {
-        ViewModel = App.GetService<ListendetailsViewModel>();
+        ViewModel = App.GetService<ChatsViewModel>();
         InitializeComponent();
     }
 

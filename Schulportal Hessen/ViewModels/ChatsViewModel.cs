@@ -8,7 +8,7 @@ using Schulportal_Hessen.Core.Models;
 
 namespace Schulportal_Hessen.ViewModels;
 
-public partial class ListendetailsViewModel : ObservableRecipient, INavigationAware
+public partial class ChatsViewModel : ObservableRecipient, INavigationAware
 {
     private readonly ISampleDataService _sampleDataService;
 
@@ -17,7 +17,7 @@ public partial class ListendetailsViewModel : ObservableRecipient, INavigationAw
 
     public ObservableCollection<SampleOrder> SampleItems { get; private set; } = new ObservableCollection<SampleOrder>();
 
-    public ListendetailsViewModel(ISampleDataService sampleDataService)
+    public ChatsViewModel(ISampleDataService sampleDataService)
     {
         _sampleDataService = sampleDataService;
     }

@@ -35,7 +35,7 @@ public class WebViewService : IWebViewService
         _webView = webView;
         _webView.NavigationCompleted += OnWebViewNavigationCompleted;
         await _webView.EnsureCoreWebView2Async();
-        Debug.WriteLine("WEBVIEWCOREREADDY");
+        //Debug.WriteLine("WEBVIEWCOREREADDY");
         _webView.Source = new("https://start.schulportal.hessen.de/index.php");
         var sessionCookie = _authService.SPHSession;
         if (string.IsNullOrEmpty(sessionCookie)) return;

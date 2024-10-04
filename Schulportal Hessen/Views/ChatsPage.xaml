@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Schulportal_Hessen.Views.ListendetailsPage"
+    x:Class="Schulportal_Hessen.Views.ChatsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +8,6 @@
     xmlns:models="using:Schulportal_Hessen.Core.Models"
     xmlns:views="using:Schulportal_Hessen.Views"
     xmlns:behaviors="using:Schulportal_Hessen.Behaviors"
-    behaviors:NavigationViewHeaderBehavior.HeaderMode="Never"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="ItemTemplate" x:DataType="models:SampleOrder">
@@ -35,7 +34,7 @@
 
         <DataTemplate x:Key="DetailsTemplate">
             <Grid>
-                <views:ListendetailsDetailControl ListDetailsMenuItem="{Binding}" />
+                <views:ChatsControl ChatsMenuItem="{Binding}" />
             </Grid>
         </DataTemplate>
 
@@ -78,14 +77,14 @@
                         <AdaptiveTrigger MinWindowWidth="641" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ListDetailsViewControl.ListHeaderTemplate" Value="{StaticResource ListHeaderTemplate}" />
+                        <Setter Target="ChatsControl.ListHeaderTemplate" Value="{StaticResource ListHeaderTemplate}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <controls:ListDetailsView
-            x:Uid="Listendetails"
-            x:Name="ListDetailsViewControl"
+            x:Uid="Chats"
+            x:Name="ChatsControl"
             BackButtonBehavior="Manual"
             Background="Transparent"
             BorderBrush="Transparent"

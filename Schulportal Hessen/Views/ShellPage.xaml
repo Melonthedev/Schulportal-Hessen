@@ -78,9 +78,28 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem x:Uid="Shell_Webansicht" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.WebansichtViewModel">
+                <NavigationViewItem x:Uid="Shell_Courses" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.CoursesViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE7BC;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem x:Uid="Shell_Timetable" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.TimetableViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF763;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem x:Uid="Shell_Substitutions" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.SubstitutionsViewModel" >
+                    <NavigationViewItem.Icon>
+                        <!--<FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE7EE;"/>-->
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE779;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem x:Uid="Shell_Chats" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.ChatsViewModel" >
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8F2;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
@@ -96,17 +115,10 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 
-                <NavigationViewItem x:Uid="Shell_Listendetails" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.ListendetailsViewModel" >
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xea37;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                
 
-                <NavigationViewItem x:Uid="Shell_Timetable" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.TimetableViewModel">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe80a;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                
+                
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <StackPanel>

@@ -18,10 +18,12 @@ public class PageService : IPageService
         Configure<WebansichtViewModel, WebansichtPage>();
         Configure<InhaltsrasterViewModel, InhaltsrasterPage>();
         Configure<InhaltsrasterDetailViewModel, InhaltsrasterDetailPage>();
-        Configure<ListendetailsViewModel, ListendetailsPage>();
+        Configure<ChatsViewModel, ChatsPage>();
         Configure<SettingsViewModel, SettingsPage>();
         Configure<LoginViewModel, LoginPage>();
         Configure<TimetableViewModel, TimetablePage>();
+        Configure<CoursesViewModel, CoursesPage>();
+        Configure<SubstitutionsViewModel, SubstitutionsPage>();
     }
 
     public Type GetPageType(string key)
