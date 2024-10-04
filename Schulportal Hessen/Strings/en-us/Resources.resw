@@ -221,4 +221,7 @@
   <data name="Shell_Timetable.Content" xml:space="preserve">
     <value>Timetable</value>
   </data>
+  <data name="Shell_SettingsCardSample.Content" xml:space="preserve">
+    <value>SettingsCardSample</value>
+  </data>
 </root>

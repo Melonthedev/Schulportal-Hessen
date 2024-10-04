@@ -44,7 +44,7 @@
                     VerticalAlignment="Center"
                     MaxWidth="600"/>-->
 
-            <Button x:Name="ConnectionStatusButton" Visibility="Collapsed" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
+            <Button x:Name="ConnectionStatusButton" Visibility="Collapsed" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" >
                 <StackPanel Orientation="Horizontal">
                     <FontIcon Glyph="&#xEA6A;" />
                     <!--<FontIcon Glyph="&#xEB5E;" />-->
@@ -54,7 +54,7 @@
                     <Flyout x:Name="ConnectionStatusFlyout">
                         <StackPanel>
                             <TextBlock FontSize="15" FontWeight="SemiBold" Margin="8" x:Name="ConnectionStatusFlyoutText" TextAlignment="Center">Offline Mode active. Synchronisation is paused.</TextBlock>
-                            <Button HorizontalAlignment="Left" Content="Reconnect" Margin="8" x:Name="ConnectionStatusFlyoutReconnectButton"/>
+                            <Button HorizontalAlignment="Left" Content="Reconnect" Margin="8" x:Name="ConnectionStatusFlyoutReconnectButton" Click="ConnectionStatusFlyoutReconnectButton_Click"/>
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
@@ -107,6 +107,11 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe80a;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem x:Uid="Shell_SettingsCardSample" helpers:NavigationHelper.NavigateTo="Schulportal_Hessen.ViewModels.SettingsCardSampleViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <StackPanel>
@@ -157,13 +162,27 @@
                 <Frame x:Name="NavigationFrame" />
             </Grid>
         </NavigationView>
-        <InfoBar x:Name="ErrorInfoBar"
+        <InfoBar x:Name="InformationBar"
              Title="Error"
              Message="Something went wrong!"
              IsOpen="False"
              Severity="Error"
              Margin="10"
              HorizontalAlignment="Center"
-             VerticalAlignment="Bottom"/>
+             VerticalAlignment="Bottom"
+             Opacity="1" />
+        
+        <Grid.Resources>
+            <!-- Storyboard für Fade-Out -->
+            <Storyboard x:Name="FadeOutStoryboard">
+                <DoubleAnimation Storyboard.TargetName="InformationBar"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1.0"
+                             To="0.0"
+                             Duration="0:0:0.2" />
+                <!--<FadeOutThemeAnimation Storyboard.TargetName="InformationBar" />-->
+                <!-- 0.2 Sekunden Fade-Out -->
+            </Storyboard>
+        </Grid.Resources>
     </Grid>
 </Page>

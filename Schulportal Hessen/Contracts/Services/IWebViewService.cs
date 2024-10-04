@@ -20,7 +20,7 @@ public interface IWebViewService
         get;
     }
 
-    event EventHandler<CoreWebView2WebErrorStatus>? NavigationCompleted;
+    event EventHandler<Microsoft.Web.WebView2.Core.CoreWebView2WebErrorStatus>? NavigationCompleted;
 
     void Initialize(WebView2 webView);
 

@@ -74,6 +74,11 @@ public class SpWrapper
         return schools;
     }
 
+    public void PingSchulportal()
+    {
+        GetHtmlAsync("https://start.schulportal.hessen.de/index.php");
+    }
+
     public async Task<string?> GetFullNameAsync()
     {
         var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");

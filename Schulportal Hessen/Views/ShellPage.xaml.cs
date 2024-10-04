@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-
+using Microsoft.UI.Xaml.Media.Animation;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Helpers;
 using Schulportal_Hessen.Services;
@@ -60,17 +60,34 @@ public sealed partial class ShellPage : Page
         _authService.OnLoggedIn += AuthService_OnLoggedIn;
     }
 
-    public void ShowError(string errorMessage, string title)
-    {
-        ErrorInfoBar.Message = errorMessage;
-        ErrorInfoBar.Title = title;
-        ErrorInfoBar.IsOpen = true;
-        ErrorInfoBar.Severity = InfoBarSeverity.Error;
-    }
 
-    public void HideError()
+    public void ShowError(string title, string message)
+        => ShowInformation(title, message, InfoBarSeverity.Error, false, true);
+
+    public void ShowSuccess(string title, string message) 
+        => ShowInformation(title, message, InfoBarSeverity.Success, false, true);
+
+    public async Task ShowInformation(string title, string message, InfoBarSeverity severity, bool closable, bool autoClose)
     {
-        ErrorInfoBar.IsOpen = false;
+        // Open
+        InformationBar.Opacity = 1;
+        InformationBar.Visibility = Visibility.Visible;
+        InformationBar.IsOpen = true;
+        // Set
+        InformationBar.Message = message;
+        InformationBar.Title = title;
+        InformationBar.IsClosable = closable;
+        InformationBar.Severity = severity;
+        // Close
+        if (!autoClose) return;
+        await Task.Delay(5000);
+        FadeOutStoryboard.Begin();
+        FadeOutStoryboard.Completed += (sender, e) => InformationBar.IsOpen = false;
+    }        
+
+    public void HideInfoBar()
+    {
+        InformationBar.IsOpen = false;
     }
 
     public void NetworkService_OnConnectionStatusChanged(bool IsOffline)
@@ -83,7 +100,8 @@ public sealed partial class ShellPage : Page
         else
         {
             ConnectionStatusButton.Visibility = Visibility.Collapsed;
-            HideError();
+            HideInfoBar();
+            ShowSuccess("Reconnected", "You are back online");
         }
         if (App.MainWindow.ExtendsContentIntoTitleBar == true)
         {
@@ -133,6 +151,7 @@ public sealed partial class ShellPage : Page
 
     private void SetRegionsForCustomTitleBar()
     {
+        if (AppTitleBar.XamlRoot == null) return;
         var scaleAdjustment = AppTitleBar.XamlRoot.RasterizationScale;
         RightPaddingColumn.Width = new GridLength(m_AppWindow.TitleBar.RightInset / scaleAdjustment);
         LeftPaddingColumn.Width = new GridLength(m_AppWindow.TitleBar.LeftInset / scaleAdjustment);
@@ -156,7 +175,7 @@ public sealed partial class ShellPage : Page
 
         var rectArray = new RectInt32[] { ConnectionStatusButtonRect };
         var nonClientInputSrc = InputNonClientPointerSource.GetForWindowId(m_AppWindow.Id);
-        Debug.WriteLine("OEBUS");
+        //Debug.WriteLine("OEBUS");
         nonClientInputSrc.SetRegionRects(NonClientRegionKind.Passthrough, rectArray);
     }
 
@@ -209,6 +228,13 @@ public sealed partial class ShellPage : Page
         }
     }
 
+    private void ConnectionStatusFlyoutReconnectButton_Click(object sender, RoutedEventArgs e)
+    {
+        // Reconnect to the internet
+        _SpWrapper.PingSchulportal();
+        ConnectionStatusFlyout.Hide();
+    }
+
     private void NavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
     {
         AccountFlyout?.ShowAt(AccountItem);
@@ -223,6 +249,7 @@ public sealed partial class ShellPage : Page
     public void AuthService_OnLoggedIn()
     {
         UpdateLoginStatusUi();
+        ShowSuccess("Success", "Logged in successfully");
     }
 
     private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
@@ -263,4 +290,6 @@ public sealed partial class ShellPage : Page
 
         args.Handled = result;
     }
+
+    
 }

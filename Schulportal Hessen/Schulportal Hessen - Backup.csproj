@@ -23,34 +23,24 @@
     <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.1.240916" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
-    <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
 	<PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
-	<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
-	<PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Core" Version="7.1.2" />
-	<PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
-	<PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Primitives" Version="7.1.2" />
-	<PackageReference Include="HtmlAgilityPack" Version="1.11.67" />
-	<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-	<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
-	<PackageReference Include="WinUIEx" Version="2.4.2" />
-	  <PackageReference Include="CommunityToolkit.Common">
-		  <Version>8.2.2</Version>
-	  </PackageReference>
-	  <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
-		  <Version>8.1.240916</Version>
-	  </PackageReference>
-	  <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls">
-		  <Version>8.1.240916</Version>
-	  </PackageReference>
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.67" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.26100.1742" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageReference Include="WinUIEx" Version="2.3.2" />
   </ItemGroup>
 
-  <PropertyGroup>
-	<WindowsSdkPackageVersion>10.0.19041.41</WindowsSdkPackageVersion>
-  </PropertyGroup>
-  <ItemGroup>
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+		<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" />
+		<!-- Add more community toolkit references here -->
+	</ItemGroup>
+
+	<ItemGroup>
     <ProjectReference Include="..\Schulportal Hessen.Core\Schulportal Hessen.Core.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
