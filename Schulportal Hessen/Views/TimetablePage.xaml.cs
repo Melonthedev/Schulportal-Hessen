@@ -1,11 +1,10 @@
-﻿using Microsoft.UI.Xaml.Controls;
-
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Schulportal_Hessen.Helpers;
 using Schulportal_Hessen.ViewModels;
 
 namespace Schulportal_Hessen.Views;
 
-// TODO: Change the grid as appropriate for your app. Adjust the column definitions on DataGridPage.xaml.
-// For more details, see the documentation at https://docs.microsoft.com/windows/communitytoolkit/controls/datagrid.
 public sealed partial class TimetablePage : Page
 {
     public TimetableViewModel ViewModel
@@ -13,9 +12,32 @@ public sealed partial class TimetablePage : Page
         get;
     }
 
+    public SpWrapper _SpWrapper
+    {
+        get;
+    }
+
     public TimetablePage()
     {
         ViewModel = App.GetService<TimetableViewModel>();
+        _SpWrapper = App.GetService<SpWrapper>();
+        Loaded += TimetablePage_Loaded;
         InitializeComponent();
+    }
+
+
+    private async void TimetablePage_Loaded(object sender, RoutedEventArgs e)
+    {
+        await LoadContents();
+    }
+
+    public async Task LoadContents()
+    {
+        if (!await _SpWrapper.AutoLoginAsync())
+        {
+            return;
+        }
+        TimetableHeader.Text = await _SpWrapper.GetSchoolClassAsync();
+        _SpWrapper.GetTimetableAsync();
     }
 }

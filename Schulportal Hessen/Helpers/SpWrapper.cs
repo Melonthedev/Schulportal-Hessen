@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using Schulportal_Hessen.Models;
 using Schulportal_Hessen.Services;
 
 namespace Schulportal_Hessen.Helpers;
@@ -123,5 +124,43 @@ public class SpWrapper
         return schoolClass.InnerHtml;
     }
 
+    public async Task<List<TimeTableLesson>> GetTimetableAsync()
+    {
+        var html = await GetHtmlAsync("https://start.schulportal.hessen.de/stundenplan.php");
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+        var timetableBody = doc.DocumentNode.SelectSingleNode("//*[@id=\"all\"]/div[1]/div/div[3]/table/tbody");
+        var output = new List<TimeTableLesson>();
+        if (timetableBody == null) return output;
+
+        for (var i = 1; i < 10; i++)
+        {
+            var tr = timetableBody.SelectSingleNode($"tr[{i + 1}]");
+            if (tr == null) continue;
+            
+            for (var d = 1; d < 6; d++)
+            {
+                var lesson = tr.SelectSingleNode($"td[{d + 1}]/div");
+                if (lesson == null) continue;
+                var subject = lesson.SelectSingleNode("b").InnerText.Trim();
+                var teacher = lesson.SelectSingleNode("small").InnerText.Trim();
+                lesson.RemoveChild(lesson.SelectSingleNode("b"));
+                lesson.RemoveChild(lesson.SelectSingleNode("small"));
+                var room = lesson.InnerText.Trim();
+                var timeTableLesson = new TimeTableLesson()
+                {
+                    Day = d,
+                    Hour = i,
+                    Room = room,
+                    Subject = subject,
+                    Teacher = teacher
+                };
+                output.Add(timeTableLesson);
+                // TODO: Handle several lessons in one hour (F/L)
+            }
+        }
+
+        return output;
+    }
 
 }
