@@ -79,6 +79,7 @@ public partial class App : Application
             services.AddSingleton<ErrorService>();
             services.AddSingleton<AuthService>();
             services.AddSingleton<SpWrapper>();
+            services.AddSingleton<TimeTableService>();
 
             // Views and ViewModels
             services.AddTransient<LoginViewModel>();

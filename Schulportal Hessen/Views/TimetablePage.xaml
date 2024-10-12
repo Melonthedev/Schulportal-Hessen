@@ -40,30 +40,31 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-                
+                <!-- TODO: SAVE LOCALLY PERSONAL TIMETABLE WITH CHECKS OF SP TIMETABLE & INFO IF CHANGED (SHOW CHANGES) & ABILITY TO EDIT (REMOVE LATIN EG) & ADD/DEFINE/GET FROM TIMES LUNCH BREAKS -->
 
                 <!-- Timetable -->
-                <Grid x:Name="TimeTableGrid">
+                <Grid x:Name="TimeTableGrid" Margin="0,0,15,0">
                     <Grid.RowDefinitions>
                         <!-- Erste Zeile für die Kopfzeile (Tage der Woche) -->
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="auto"/>
                         <!-- Weitere Zeilen für die Stunden -->
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        
 
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
                         <!-- Erste Spalte für die Uhrzeiten -->
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="auto"/>
                         <!-- Weitere Spalten für die Wochentage -->
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -80,40 +81,87 @@
                     <TextBlock x:Uid="Timetable_Friday" Grid.Row="0" Grid.Column="5" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center"/>
 
                     <!-- Spalte für Uhrzeiten -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="1. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
+                    <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="1. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="09:00 - 10:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="2. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
+                    <Grid Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="2. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="10:00 - 11:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="3. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="10:15 - 10:35" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,15,0" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="11:00 - 12:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="3. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
-
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="12:00 - 13:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="4. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
-
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="12:00 - 13:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="5. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
-
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="12:00 - 13:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="6. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
-
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="12:00 - 13:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="7. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
-
-                    <TextBlock Grid.Row="9" Grid.Column="0" Text="12:00 - 13:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="9" Grid.Column="0" Text="8. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
-
-                    <TextBlock Grid.Row="10" Grid.Column="0" Text="12:00 - 13:00" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                    <TextBlock Grid.Row="10" Grid.Column="0" Text="9. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
+                    <Grid Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="3. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="4. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="5. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="6. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="7. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="8. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                    <Grid Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="9. Stunde" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Text="08:00 - 09:00" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
 
                     <!-- Platzhalter für Fächer -->
                     
                     
-                    <Border Grid.Row="1" Grid.Column="1" Background="LightBlue" CornerRadius="5" Margin="5">
+                    <Border Grid.Row="1" Grid.Column="1" Background="LightBlue" CornerRadius="5" Margin="20">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text="Math" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                             <StackPanel Orientation="Horizontal">
@@ -127,7 +175,7 @@
                         </StackPanel>
                     </Border>
                     
-                    <Border Grid.Row="3" Grid.ColumnSpan="6" Background="Gray" CornerRadius="5" Margin="5">
+                    <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Background="Gray" CornerRadius="5" Margin="5" Height="35">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon Glyph="&#xED56;" FontSize="15" Margin="10,0,10,0"/>
                             <TextBlock Text="Lunch Break" VerticalAlignment="Center" HorizontalAlignment="Center"/>
