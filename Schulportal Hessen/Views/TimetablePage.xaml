@@ -43,7 +43,7 @@
                 
 
                 <!-- Timetable -->
-                <Grid>
+                <Grid x:Name="TimeTableGrid">
                     <Grid.RowDefinitions>
                         <!-- Erste Zeile für die Kopfzeile (Tage der Woche) -->
                         <RowDefinition Height="Auto"/>
@@ -111,6 +111,8 @@
                     <TextBlock Grid.Row="10" Grid.Column="0" Text="9. Stunde" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="20" FontWeight="SemiBold"/>
 
                     <!-- Platzhalter für Fächer -->
+                    
+                    
                     <Border Grid.Row="1" Grid.Column="1" Background="LightBlue" CornerRadius="5" Margin="5">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text="Math" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
@@ -124,6 +126,7 @@
                             </StackPanel>
                         </StackPanel>
                     </Border>
+                    
                     <Border Grid.Row="3" Grid.ColumnSpan="6" Background="Gray" CornerRadius="5" Margin="5">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon Glyph="&#xED56;" FontSize="15" Margin="10,0,10,0"/>

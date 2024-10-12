@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ColorCode.Compilation.Languages;
 using HtmlAgilityPack;
 using Schulportal_Hessen.Models;
 using Schulportal_Hessen.Services;
@@ -37,23 +38,25 @@ public class SpWrapper
         return;
     }
 
-    public async Task<string?> GetHtmlAsync(string url)
+    public async Task<HtmlDocument?> GetHtmlAsync(string url)
     {
         var response = await _networkService.GetAsync(url);
         if (!response.IsSuccessStatusCode)
         {
             _networkService.ShowNetworkError();
         }
-        return await response.Content.ReadAsStringAsync();
+        var html = await response.Content.ReadAsStringAsync();
+        if (html == null) return null;
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+        return doc;
     }
 
 
     // TODO: Save XPaths in config
     public async Task<List<(string, int)>?> GetSchoolIdsAsync()
     {
-        var html = await GetHtmlAsync("https://start.schulportal.hessen.de/index.php");
-        var doc = new HtmlDocument();
-        doc.LoadHtml(html);
+        var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/index.php");
         var schoolList = doc.DocumentNode.SelectSingleNode("//*[@id=\"accordion\"]");
         if (schoolList == null) { return null; }
 
@@ -82,9 +85,8 @@ public class SpWrapper
 
     public async Task<string?> GetFullNameAsync()
     {
-        var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
-        var doc = new HtmlDocument();
-        doc.LoadHtml(html);
+        var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
+
         var nachname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[2]/td[2]");
         var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[3]/td[2]");
         if (nachname == null || vorname == null) return null;
@@ -94,9 +96,7 @@ public class SpWrapper
 
     public async Task<string?> GetSurNameAsync()
     {
-        var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
-        var doc = new HtmlDocument();
-        doc.LoadHtml(html);
+        var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
         var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[3]/td[2]");
         if (vorname == null) return null;
         var name = vorname.InnerText;
@@ -106,9 +106,7 @@ public class SpWrapper
 
     public async Task<string?> GetDateOfBirthAsync()
     {
-        var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
-        var doc = new HtmlDocument();
-        doc.LoadHtml(html);
+        var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
         var dateOfBirth = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[4]/td[2]");
         if (dateOfBirth == null) return null;
         return dateOfBirth.InnerHtml;
@@ -116,9 +114,7 @@ public class SpWrapper
 
     public async Task<string?> GetSchoolClassAsync()
     {
-        var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
-        var doc = new HtmlDocument();
-        doc.LoadHtml(html);
+        var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
         var schoolClass = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[6]/td[2]");
         if (schoolClass == null) return null;
         return schoolClass.InnerHtml;
@@ -126,9 +122,7 @@ public class SpWrapper
 
     public async Task<List<TimeTableLesson>> GetTimetableAsync()
     {
-        var html = await GetHtmlAsync("https://start.schulportal.hessen.de/stundenplan.php");
-        var doc = new HtmlDocument();
-        doc.LoadHtml(html);
+        var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/stundenplan.php");
         var timetableBody = doc.DocumentNode.SelectSingleNode("//*[@id=\"all\"]/div[1]/div/div[3]/table/tbody");
         var output = new List<TimeTableLesson>();
         if (timetableBody == null) return output;
