@@ -117,22 +117,27 @@ public class SpWrapper {
             if (tr == null) continue;
 
             for (var d = 1; d < 6; d++) {
-                var lesson = tr.SelectSingleNode($"td[{d + 1}]/div");
-                if (lesson == null) continue;
-                var subject = lesson.SelectSingleNode("b").InnerText.Trim();
-                var room = lesson.SelectSingleNode("small").InnerText.Trim();
-                lesson.RemoveChild(lesson.SelectSingleNode("b"));
-                lesson.RemoveChild(lesson.SelectSingleNode("small"));
-                var teacher = lesson.InnerText.Trim();
-                var timeTableLesson = new TimeTableLesson() {
-                    Day = d,
-                    Hour = i,
-                    Room = room,
-                    Subject = subject,
-                    Teacher = teacher
-                };
-                output.Add(timeTableLesson);
-                // TODO: Handle several lessons in one hour (F/L)
+                var lessonParent = tr.SelectSingleNode($"td[{d + 1}]");
+                if (lessonParent == null) continue;
+                for (int y = 1; y <= lessonParent.ChildNodes.Count; y++) {
+                    var lesson = lessonParent.SelectSingleNode($"div[{y}]");
+                    if (lesson == null) continue;
+                    var subject = lesson.SelectSingleNode("b").InnerText.Trim();
+                    var room = lesson.SelectSingleNode("small").InnerText.Trim();
+                    lesson.RemoveChild(lesson.SelectSingleNode("b"));
+                    lesson.RemoveChild(lesson.SelectSingleNode("small"));
+                    var teacher = lesson.InnerText.Trim();
+                    var timeTableLesson = new TimeTableLesson() {
+                        Day = d,
+                        Hour = i,
+                        Room = room,
+                        Course = new Course() {
+                            SchulPortalTimeTableName = subject,
+                            Teacher = teacher
+                        }
+                    };
+                    output.Add(timeTableLesson);
+                }
             }
         }
 
