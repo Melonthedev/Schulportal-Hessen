@@ -1,6 +1,5 @@
 ﻿namespace Schulportal_Hessen.Contracts.Services;
 
-public interface IActivationService
-{
+public interface IActivationService {
     Task ActivateAsync(object activationArgs);
 }

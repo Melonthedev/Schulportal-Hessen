@@ -5,15 +5,10 @@ using Schulportal_Hessen.ViewModels;
 namespace Schulportal_Hessen.Views;
 
 // To learn more about WebView2, see https://docs.microsoft.com/microsoft-edge/webview2/.
-public sealed partial class WebansichtPage : Page
-{
-    public WebansichtViewModel ViewModel
-    {
-        get;
-    }
+public sealed partial class WebansichtPage : Page {
+    public WebansichtViewModel ViewModel { get; }
 
-    public WebansichtPage()
-    {
+    public WebansichtPage() {
         ViewModel = App.GetService<WebansichtViewModel>();
         InitializeComponent();
 

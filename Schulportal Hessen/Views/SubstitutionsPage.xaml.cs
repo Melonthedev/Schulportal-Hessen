@@ -4,15 +4,12 @@ using Schulportal_Hessen.ViewModels;
 
 namespace Schulportal_Hessen.Views;
 
-public sealed partial class SubstitutionsPage : Page
-{
-    public SubstitutionsViewModel ViewModel
-    {
+public sealed partial class SubstitutionsPage : Page {
+    public SubstitutionsViewModel ViewModel {
         get;
     }
 
-    public SubstitutionsPage()
-    {
+    public SubstitutionsPage() {
         ViewModel = App.GetService<SubstitutionsViewModel>();
         InitializeComponent();
     }

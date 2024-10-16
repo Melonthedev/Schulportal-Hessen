@@ -1,7 +1,6 @@
 ﻿namespace Schulportal_Hessen.Behaviors;
 
-public enum NavigationViewHeaderMode
-{
+public enum NavigationViewHeaderMode {
     Always,
     Never,
     Minimal

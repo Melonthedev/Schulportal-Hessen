@@ -2,8 +2,7 @@
 
 namespace Schulportal_Hessen.Contracts.Services;
 
-public interface IAppNotificationService
-{
+public interface IAppNotificationService {
     void Initialize();
 
     bool Show(string payload);

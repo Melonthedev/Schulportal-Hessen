@@ -3,20 +3,16 @@ using Microsoft.Web.WebView2.Core;
 
 namespace Schulportal_Hessen.Contracts.Services;
 
-public interface IWebViewService
-{
-    Uri? Source
-    {
+public interface IWebViewService {
+    Uri? Source {
         get;
     }
 
-    bool CanGoBack
-    {
+    bool CanGoBack {
         get;
     }
 
-    bool CanGoForward
-    {
+    bool CanGoForward {
         get;
     }
 

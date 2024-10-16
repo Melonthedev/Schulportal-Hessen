@@ -2,9 +2,7 @@
 
 namespace Schulportal_Hessen.ViewModels;
 
-public partial class CoursesViewModel : ObservableRecipient
-{
-    public CoursesViewModel()
-    {
+public partial class CoursesViewModel : ObservableRecipient {
+    public CoursesViewModel() {
     }
 }

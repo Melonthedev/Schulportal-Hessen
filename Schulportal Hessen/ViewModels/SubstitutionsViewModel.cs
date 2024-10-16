@@ -2,9 +2,7 @@
 
 namespace Schulportal_Hessen.ViewModels;
 
-public partial class SubstitutionsViewModel : ObservableRecipient
-{
-    public SubstitutionsViewModel()
-    {
+public partial class SubstitutionsViewModel : ObservableRecipient {
+    public SubstitutionsViewModel() {
     }
 }

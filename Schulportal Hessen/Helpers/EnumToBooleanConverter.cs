@@ -3,18 +3,13 @@ using Microsoft.UI.Xaml.Data;
 
 namespace Schulportal_Hessen.Helpers;
 
-public class EnumToBooleanConverter : IValueConverter
-{
-    public EnumToBooleanConverter()
-    {
+public class EnumToBooleanConverter : IValueConverter {
+    public EnumToBooleanConverter() {
     }
 
-    public object Convert(object value, Type targetType, object parameter, string language)
-    {
-        if (parameter is string enumString)
-        {
-            if (!Enum.IsDefined(typeof(ElementTheme), value))
-            {
+    public object Convert(object value, Type targetType, object parameter, string language) {
+        if (parameter is string enumString) {
+            if (!Enum.IsDefined(typeof(ElementTheme), value)) {
                 throw new ArgumentException("ExceptionEnumToBooleanConverterValueMustBeAnEnum");
             }
 
@@ -26,10 +21,8 @@ public class EnumToBooleanConverter : IValueConverter
         throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        if (parameter is string enumString)
-        {
+    public object ConvertBack(object value, Type targetType, object parameter, string language) {
+        if (parameter is string enumString) {
             return Enum.Parse(typeof(ElementTheme), enumString);
         }
 

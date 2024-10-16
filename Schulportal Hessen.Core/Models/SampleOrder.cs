@@ -1,77 +1,62 @@
 ﻿namespace Schulportal_Hessen.Core.Models;
 
 // Model for the SampleDataService. Replace with your own model.
-public class SampleOrder
-{
-    public long OrderID
-    {
+public class SampleOrder {
+    public long OrderID {
         get; set;
     }
 
-    public DateTime OrderDate
-    {
+    public DateTime OrderDate {
         get; set;
     }
 
-    public DateTime RequiredDate
-    {
+    public DateTime RequiredDate {
         get; set;
     }
 
-    public DateTime ShippedDate
-    {
+    public DateTime ShippedDate {
         get; set;
     }
 
-    public string ShipperName
-    {
+    public string ShipperName {
         get; set;
     }
 
-    public string ShipperPhone
-    {
+    public string ShipperPhone {
         get; set;
     }
 
-    public double Freight
-    {
+    public double Freight {
         get; set;
     }
 
-    public string Company
-    {
+    public string Company {
         get; set;
     }
 
-    public string ShipTo
-    {
+    public string ShipTo {
         get; set;
     }
 
-    public double OrderTotal
-    {
+    public double OrderTotal {
         get; set;
     }
 
-    public string Status
-    {
+    public string Status {
         get; set;
     }
 
-    public int SymbolCode
-    {
+    public int SymbolCode {
         get; set;
     }
 
-    public string SymbolName
-    {
+    public string SymbolName {
         get; set;
     }
 
     public char Symbol => (char)SymbolCode;
 
-    public ICollection<SampleOrderDetail> Details
-    {
+    public ICollection<SampleOrderDetail> Details {
         get; set;
     }
 

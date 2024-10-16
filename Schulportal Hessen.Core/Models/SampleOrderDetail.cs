@@ -1,50 +1,40 @@
 ﻿namespace Schulportal_Hessen.Core.Models;
 
 // Model for the SampleDataService. Replace with your own model.
-public class SampleOrderDetail
-{
-    public long ProductID
-    {
+public class SampleOrderDetail {
+    public long ProductID {
         get; set;
     }
 
-    public string ProductName
-    {
+    public string ProductName {
         get; set;
     }
 
-    public int Quantity
-    {
+    public int Quantity {
         get; set;
     }
 
-    public double Discount
-    {
+    public double Discount {
         get; set;
     }
 
-    public string QuantityPerUnit
-    {
+    public string QuantityPerUnit {
         get; set;
     }
 
-    public double UnitPrice
-    {
+    public double UnitPrice {
         get; set;
     }
 
-    public string CategoryName
-    {
+    public string CategoryName {
         get; set;
     }
 
-    public string CategoryDescription
-    {
+    public string CategoryDescription {
         get; set;
     }
 
-    public double Total
-    {
+    public double Total {
         get; set;
     }
 

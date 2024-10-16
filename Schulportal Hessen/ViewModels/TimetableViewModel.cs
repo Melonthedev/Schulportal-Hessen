@@ -1,26 +1,21 @@
-﻿using System.Collections.ObjectModel;
-
-using CommunityToolkit.Mvvm.ComponentModel;
-
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Schulportal_Hessen.Contracts.ViewModels;
 using Schulportal_Hessen.Core.Contracts.Services;
 using Schulportal_Hessen.Core.Models;
+using System.Collections.ObjectModel;
 
 namespace Schulportal_Hessen.ViewModels;
 
-public partial class TimetableViewModel : ObservableRecipient, INavigationAware
-{
+public partial class TimetableViewModel : ObservableRecipient, INavigationAware {
     private readonly ISampleDataService _sampleDataService;
 
     public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
 
-    public TimetableViewModel(ISampleDataService sampleDataService)
-    {
+    public TimetableViewModel(ISampleDataService sampleDataService) {
         _sampleDataService = sampleDataService;
     }
 
-    public async void OnNavigatedTo(object parameter)
-    {
+    public async void OnNavigatedTo(object parameter) {
         Source.Clear();
 
         // TODO: Replace with real data.
@@ -32,7 +27,6 @@ public partial class TimetableViewModel : ObservableRecipient, INavigationAware
         }*/
     }
 
-    public void OnNavigatedFrom()
-    {
+    public void OnNavigatedFrom() {
     }
 }

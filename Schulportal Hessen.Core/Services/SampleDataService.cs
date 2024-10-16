@@ -10,23 +10,19 @@ namespace Schulportal_Hessen.Core.Services;
 // 3. Models/SampleCompany.cs
 // 4. Models/SampleOrder.cs
 // 5. Models/SampleOrderDetail.cs
-public class SampleDataService : ISampleDataService
-{
+public class SampleDataService : ISampleDataService {
     private List<SampleOrder> _allOrders;
 
-    public SampleDataService()
-    {
+    public SampleDataService() {
     }
 
-    private static IEnumerable<SampleOrder> AllOrders()
-    {
+    private static IEnumerable<SampleOrder> AllOrders() {
         // The following is order summary data
         var companies = AllCompanies();
         return companies.SelectMany(c => c.Orders);
     }
 
-    private static IEnumerable<SampleCompany> AllCompanies()
-    {
+    private static IEnumerable<SampleCompany> AllCompanies() {
         return new List<SampleCompany>()
         {
             new SampleCompany()
@@ -496,24 +492,21 @@ public class SampleDataService : ISampleDataService
         };
     }
 
-    public async Task<IEnumerable<SampleOrder>> GetContentGridDataAsync()
-    {
+    public async Task<IEnumerable<SampleOrder>> GetContentGridDataAsync() {
         _allOrders ??= new List<SampleOrder>(AllOrders());
 
         await Task.CompletedTask;
         return _allOrders;
     }
 
-    public async Task<IEnumerable<SampleOrder>> GetListDetailsDataAsync()
-    {
+    public async Task<IEnumerable<SampleOrder>> GetListDetailsDataAsync() {
         _allOrders ??= new List<SampleOrder>(AllOrders());
 
         await Task.CompletedTask;
         return _allOrders;
     }
 
-    public async Task<IEnumerable<SampleOrder>> GetGridDataAsync()
-    {
+    public async Task<IEnumerable<SampleOrder>> GetGridDataAsync() {
         _allOrders ??= new List<SampleOrder>(AllOrders());
 
         await Task.CompletedTask;
