@@ -115,12 +115,27 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 
-                
-
-                
-                
+               
             </NavigationView.MenuItems>
-            <NavigationView.PaneFooter>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem x:Uid="Shell_Login" x:Name="LoginItem" Tapped="LoginItem_Tapped" >
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8B5;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="Shell_Account" x:Name="AccountItem" Tapped="NavigationViewItem_Tapped" Visibility="Collapsed">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE77B;"/>
+                    </NavigationViewItem.Icon>
+                    <Flyout x:Name="AccountFlyout" >
+                        <StackPanel>
+                            <TextBlock FontSize="15" FontWeight="SemiBold" Margin="8" x:Name="AccountFlyoutNameText">Loading...</TextBlock>
+                            <Button HorizontalAlignment="Stretch" Content="Abmelden" Margin="8" x:Name="AccountFlyoutLogoutButton"/>
+                        </StackPanel>
+                    </Flyout>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+            <!--<NavigationView.PaneFooter>
                 <StackPanel>
                     <NavigationViewItem x:Uid="Shell_Login" x:Name="LoginItem" Tapped="LoginItem_Tapped" >
                         <NavigationViewItem.Icon>
@@ -140,7 +155,7 @@
                     </NavigationViewItem>
                 </StackPanel>
                 
-            </NavigationView.PaneFooter>
+            </NavigationView.PaneFooter>-->
             
             <NavigationView.HeaderTemplate>
                 <DataTemplate>

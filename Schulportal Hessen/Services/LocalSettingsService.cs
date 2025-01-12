@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Diagnostics;
+using Microsoft.Extensions.Options;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Core.Contracts.Services;
 using Schulportal_Hessen.Core.Helpers;
@@ -37,6 +38,8 @@ public class LocalSettingsService : ILocalSettingsService {
             Debug.WriteLine($"Local data is stored in \"{_applicationDataFolder}\"");
         }
         _settings = new Dictionary<string, object>();
+        Debug.WriteLine("Settings stored at: " + _applicationDataFolder + "/" + _localsettingsFile);
+
     }
 
     private async Task InitializeAsync() {

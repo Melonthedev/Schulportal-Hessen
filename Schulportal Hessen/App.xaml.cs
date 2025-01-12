@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Diagnostics;
+using System.Net.Http;
+
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+
 using Schulportal_Hessen.Activation;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Core.Contracts.Services;
@@ -11,8 +15,6 @@ using Schulportal_Hessen.Notifications;
 using Schulportal_Hessen.Services;
 using Schulportal_Hessen.ViewModels;
 using Schulportal_Hessen.Views;
-using System.Diagnostics;
-using System.Net.Http;
 
 namespace Schulportal_Hessen;
 
@@ -96,6 +98,10 @@ public partial class App : Application {
             services.AddTransient<CoursesPage>();
             services.AddTransient<SubstitutionsViewModel>();
             services.AddTransient<SubstitutionsPage>();
+            services.AddTransient<FirstSubstitutionsViewModel>();
+            services.AddTransient<FirstSubstitutionsPage>();
+            services.AddTransient<SecondSubstitutionsViewModel>();
+            services.AddTransient<SecondSubstitutionsPage>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
