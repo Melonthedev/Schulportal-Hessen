@@ -3,17 +3,14 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace Schulportal_Hessen.Contracts.Services;
 
-public interface INavigationService
-{
+public interface INavigationService {
     event NavigatedEventHandler Navigated;
 
-    bool CanGoBack
-    {
+    bool CanGoBack {
         get;
     }
 
-    Frame? Frame
-    {
+    Frame? Frame {
         get; set;
     }
 

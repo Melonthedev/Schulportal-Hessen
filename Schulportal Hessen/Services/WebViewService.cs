@@ -1,15 +1,12 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
-
 using Schulportal_Hessen.Contracts.Services;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Schulportal_Hessen.Services;
 
-public class WebViewService : IWebViewService
-{
+public class WebViewService : IWebViewService {
     private WebView2? _webView;
 
     public Uri? Source => _webView?.Source;
@@ -24,14 +21,12 @@ public class WebViewService : IWebViewService
 
     private readonly AuthService _authService;
 
-    public WebViewService(AuthService authService)
-    {
+    public WebViewService(AuthService authService) {
         _authService = authService;
     }
 
     [MemberNotNull(nameof(_webView))]
-    public async void Initialize(WebView2 webView)
-    {
+    public async void Initialize(WebView2 webView) {
         _webView = webView;
         _webView.NavigationCompleted += OnWebViewNavigationCompleted;
         await _webView.EnsureCoreWebView2Async();
@@ -49,10 +44,8 @@ public class WebViewService : IWebViewService
 
     public void Reload() => _webView?.Reload();
 
-    public void UnregisterEvents()
-    {
-        if (_webView != null)
-        {
+    public void UnregisterEvents() {
+        if (_webView != null) {
             _webView.NavigationCompleted -= OnWebViewNavigationCompleted;
         }
     }

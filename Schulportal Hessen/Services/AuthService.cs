@@ -5,8 +5,7 @@ using Windows.Storage;
 
 namespace Schulportal_Hessen.Services;
 
-public class AuthService
-{
+public class AuthService {
 
     private readonly NetworkService _networkService;
     public string? SPHSession = null;
@@ -18,18 +17,15 @@ public class AuthService
     public event Action OnLogout;
 
 
-    public AuthService(NetworkService networkService)
-    {
+    public AuthService(NetworkService networkService) {
         _networkService = networkService;
         AutoLoginTask = AutoLoginAsync();
     }
 
-    public async ValueTask<bool> HandleAuthorizationRequestAsync()
-    {
+    public async ValueTask<bool> HandleAuthorizationRequestAsync() {
         var loginUrl = GetLoginUrl();
 
-        if (string.IsNullOrEmpty(loginUrl))
-        {
+        if (string.IsNullOrEmpty(loginUrl)) {
             return false;
         }
 
@@ -37,8 +33,7 @@ public class AuthService
 
         var (username, password) = GetCredentials();
 
-        if (username == null || password == null)
-        {
+        if (username == null || password == null) {
             return false;
         }
 
@@ -67,10 +62,8 @@ public class AuthService
         var loginCookies = responseLoginReq.Headers.GetValues("Set-Cookie");
         _networkService.GetHttpClient().DefaultRequestHeaders.Add("Cookie", string.Join(";", loginCookies));
 
-        foreach (var cookie in _networkService.GetHttpClient().DefaultRequestHeaders.GetValues("Cookie"))
-        {
-            if (cookie.Contains("SPH-Session"))
-            {
+        foreach (var cookie in _networkService.GetHttpClient().DefaultRequestHeaders.GetValues("Cookie")) {
+            if (cookie.Contains("SPH-Session")) {
                 var sessionCookie = cookie.Split(';')[0];
                 SPHSession = sessionCookie.Split('=')[1];
                 Debug.WriteLine($"Obtained Session Cookie: {SPHSession}");
@@ -85,28 +78,23 @@ public class AuthService
         return true;
     }
 
-    public async Task<bool> AutoLoginAsync()
-    {
-        if (AutoLoginTask != null && !AutoLoginTask.IsCompleted)
-        {
+    public async Task<bool> AutoLoginAsync() {
+        if (AutoLoginTask != null && !AutoLoginTask.IsCompleted) {
             return await AutoLoginTask;
         }
-        if (isLoggedIn)
-        {
+        if (isLoggedIn) {
             return true;
         }
         isLoggedIn = await HandleAuthorizationRequestAsync();
         Debug.WriteLine(isLoggedIn ? "Logged in successfully" : "Login failed");
         AutoLoginTask = null;
-        if (isLoggedIn)
-        {
+        if (isLoggedIn) {
             OnLoggedIn?.Invoke();
         }
         return isLoggedIn;
     }
 
-    public async Task LogoutAsync()
-    {
+    public async Task LogoutAsync() {
         var responseLogout = await _networkService.GetAsync("https://login.schulportal.hessen.de/?logout=1");
         Debug.WriteLine($"{responseLogout.StatusCode}");
         _networkService.GetHttpClient().DefaultRequestHeaders.Remove("Cookie");
@@ -119,8 +107,7 @@ public class AuthService
     }
 
 
-    public void SaveCredentials(string username, string password)
-    {
+    public void SaveCredentials(string username, string password) {
         var localSettings = ApplicationData.Current.LocalSettings;
         localSettings.Values["UserName"] = username;
         var vault = new PasswordVault();
@@ -128,61 +115,49 @@ public class AuthService
         vault.Add(credential);
     }
 
-    public (string Username, string Password) GetCredentials()
-    {
+    public (string Username, string Password) GetCredentials() {
         var vault = new PasswordVault();
-        try
-        {
+        try {
             var localSettings = ApplicationData.Current.LocalSettings;
             var userName = localSettings.Values["UserName"] as string;
             if (string.IsNullOrEmpty(userName)) return (null, null);
             var credential = vault.Retrieve("SchulportalHessen", userName);
             credential.RetrievePassword();
             return (credential.UserName, credential.Password);
-        }
-        catch (Exception)
-        {
+        } catch (Exception) {
             return (null, null);
         }
     }
 
-    public void DeleteCredentials()
-    {
+    public void DeleteCredentials() {
         var vault = new PasswordVault();
-        try
-        {
+        try {
             var localSettings = ApplicationData.Current.LocalSettings;
             var userName = localSettings.Values["UserName"] as string;
             if (string.IsNullOrEmpty(userName)) return;
             var credential = vault.Retrieve("SchulportalHessen", userName);
             vault.Remove(credential);
             localSettings.Values["UserName"] = null;
-        }
-        catch (Exception)
-        {
+        } catch (Exception) {
         }
     }
 
-    public void SaveSchoolId(string schoolId)
-    {
+    public void SaveSchoolId(string schoolId) {
         var localSettings = ApplicationData.Current.LocalSettings;
         localSettings.Values["SelectedSchoolId"] = schoolId;
     }
 
-    public string? GetSchoolId()
-    {
+    public string? GetSchoolId() {
         var localSettings = ApplicationData.Current.LocalSettings;
         return localSettings.Values["SelectedSchoolId"] as string;
     }
 
-    public void SaveLoginUrl(string loginUrl)
-    {
+    public void SaveLoginUrl(string loginUrl) {
         var localSettings = ApplicationData.Current.LocalSettings;
         localSettings.Values["LoginUrl"] = loginUrl;
     }
 
-    public string? GetLoginUrl()
-    {
+    public string? GetLoginUrl() {
         var localSettings = ApplicationData.Current.LocalSettings;
         return localSettings.Values["LoginUrl"] as string;
     }

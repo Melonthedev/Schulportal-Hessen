@@ -4,15 +4,10 @@ using Schulportal_Hessen.ViewModels;
 
 namespace Schulportal_Hessen.Views;
 
-public sealed partial class InhaltsrasterPage : Page
-{
-    public InhaltsrasterViewModel ViewModel
-    {
-        get;
-    }
+public sealed partial class InhaltsrasterPage : Page {
+    public InhaltsrasterViewModel ViewModel { get; }
 
-    public InhaltsrasterPage()
-    {
+    public InhaltsrasterPage() {
         ViewModel = App.GetService<InhaltsrasterViewModel>();
         InitializeComponent();
     }

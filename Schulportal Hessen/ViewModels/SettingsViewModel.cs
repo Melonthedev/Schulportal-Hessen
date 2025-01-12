@@ -1,20 +1,15 @@
-﻿using System.Reflection;
-using System.Windows.Input;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using Microsoft.UI.Xaml;
-
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Helpers;
-
+using System.Reflection;
+using System.Windows.Input;
 using Windows.ApplicationModel;
 
 namespace Schulportal_Hessen.ViewModels;
 
-public partial class SettingsViewModel : ObservableRecipient
-{
+public partial class SettingsViewModel : ObservableRecipient {
     private readonly IThemeSelectorService _themeSelectorService;
 
     [ObservableProperty]
@@ -23,40 +18,32 @@ public partial class SettingsViewModel : ObservableRecipient
     [ObservableProperty]
     private string _versionDescription;
 
-    public ICommand SwitchThemeCommand
-    {
+    public ICommand SwitchThemeCommand {
         get;
     }
 
-    public SettingsViewModel(IThemeSelectorService themeSelectorService)
-    {
+    public SettingsViewModel(IThemeSelectorService themeSelectorService) {
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
         _versionDescription = GetVersionDescription();
 
         SwitchThemeCommand = new RelayCommand<ElementTheme>(
-            async (param) =>
-            {
-                if (ElementTheme != param)
-                {
+            async (param) => {
+                if (ElementTheme != param) {
                     ElementTheme = param;
                     await _themeSelectorService.SetThemeAsync(param);
                 }
             });
     }
 
-    private static string GetVersionDescription()
-    {
+    private static string GetVersionDescription() {
         Version version;
 
-        if (RuntimeHelper.IsMSIX)
-        {
+        if (RuntimeHelper.IsMSIX) {
             var packageVersion = Package.Current.Id.Version;
 
             version = new(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
-        }
-        else
-        {
+        } else {
             version = Assembly.GetExecutingAssembly().GetName().Version!;
         }
 

@@ -8,26 +8,13 @@ using System.Diagnostics;
 
 namespace Schulportal_Hessen.Views;
 
-public sealed partial class MainPage : Page
-{
+public sealed partial class MainPage : Page {
 
-    public MainViewModel ViewModel
-    {
-        get;
-    }
+    public MainViewModel ViewModel { get; }
+    public AuthService _authService { get; }
+    public SpWrapper _SpWrapper { get; }
 
-    public AuthService _authService
-    {
-        get;
-    }
-
-    public SpWrapper _SpWrapper
-    {
-        get;
-    }
-
-    public MainPage()
-    {
+    public MainPage() {
         ViewModel = App.GetService<MainViewModel>();
         _authService = App.GetService<AuthService>();
         _SpWrapper = App.GetService<SpWrapper>();
@@ -36,15 +23,12 @@ public sealed partial class MainPage : Page
     }
 
 
-    private async void MainPage_Loaded(object sender, RoutedEventArgs e)
-    {
+    private async void MainPage_Loaded(object sender, RoutedEventArgs e) {
         await LoadContents();
     }
 
-    public async Task LoadContents()
-    {
-        if (!await _SpWrapper.AutoLoginAsync())
-        {
+    public async Task LoadContents() {
+        if (!await _SpWrapper.AutoLoginAsync()) {
             WelcomeMessage.Text = "Willkommen";
             return;
         }

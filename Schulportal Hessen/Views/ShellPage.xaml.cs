@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.UI;
+﻿using Microsoft.UI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -11,6 +10,7 @@ using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Helpers;
 using Schulportal_Hessen.Services;
 using Schulportal_Hessen.ViewModels;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.System;
@@ -18,24 +18,16 @@ using WinRT.Interop;
 
 namespace Schulportal_Hessen.Views;
 
-public sealed partial class ShellPage : Page
-{
-    public ShellViewModel ViewModel
-    {
-        get;
-    }
-    public SpWrapper _SpWrapper
-    {
-        get;
-    }
+public sealed partial class ShellPage : Page {
+    public ShellViewModel ViewModel { get; }
+    public SpWrapper _SpWrapper { get; }
 
     private readonly AppWindow m_AppWindow;
     private readonly ErrorService _errorService;
     private readonly NetworkService _networkService;
     private readonly AuthService _authService;
 
-    public ShellPage(ShellViewModel viewModel, SpWrapper spWrapper, ErrorService errorService, NetworkService networkService, AuthService authService)
-    {
+    public ShellPage(ShellViewModel viewModel, SpWrapper spWrapper, ErrorService errorService, NetworkService networkService, AuthService authService) {
         ViewModel = viewModel;
         _SpWrapper = spWrapper;
         _errorService = errorService;
@@ -64,11 +56,10 @@ public sealed partial class ShellPage : Page
     public void ShowError(string title, string message)
         => ShowInformation(title, message, InfoBarSeverity.Error, false, true);
 
-    public void ShowSuccess(string title, string message) 
+    public void ShowSuccess(string title, string message)
         => ShowInformation(title, message, InfoBarSeverity.Success, false, true);
 
-    public async Task ShowInformation(string title, string message, InfoBarSeverity severity, bool closable, bool autoClose)
-    {
+    public async Task ShowInformation(string title, string message, InfoBarSeverity severity, bool closable, bool autoClose) {
         // Open
         InformationBar.Opacity = 1;
         InformationBar.Visibility = Visibility.Visible;
@@ -83,74 +74,56 @@ public sealed partial class ShellPage : Page
         await Task.Delay(5000);
         FadeOutStoryboard.Begin();
         FadeOutStoryboard.Completed += (sender, e) => InformationBar.IsOpen = false;
-    }        
+    }
 
-    public void HideInfoBar()
-    {
+    public void HideInfoBar() {
         InformationBar.IsOpen = false;
     }
 
-    public void NetworkService_OnConnectionStatusChanged(bool IsOffline)
-    {
+    public void NetworkService_OnConnectionStatusChanged(bool IsOffline) {
         Debug.WriteLine("Offline: " + IsOffline);
-        if (IsOffline) 
-        {
+        if (IsOffline) {
             ConnectionStatusButton.Visibility = Visibility.Visible;
-        }
-        else
-        {
+        } else {
             ConnectionStatusButton.Visibility = Visibility.Collapsed;
             HideInfoBar();
             ShowSuccess("Reconnected", "You are back online");
         }
-        if (App.MainWindow.ExtendsContentIntoTitleBar == true)
-        {
+        if (App.MainWindow.ExtendsContentIntoTitleBar == true) {
             // Adjust the regions for the custom title bar
-            try
-            {
+            try {
                 //Debug.WriteLine("ANPASSEN WEGEN NEU ICON KEIN INTERNET");
                 SetRegionsForCustomTitleBar();
             } catch (Exception) { }
         }
     }
 
-    private void AppTitleBar_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (App.MainWindow.ExtendsContentIntoTitleBar == true)
-        {
+    private void AppTitleBar_Loaded(object sender, RoutedEventArgs e) {
+        if (App.MainWindow.ExtendsContentIntoTitleBar == true) {
             SetRegionsForCustomTitleBar();
         }
     }
 
-    private void AppTitleBar_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (App.MainWindow.ExtendsContentIntoTitleBar == true)
-        {
+    private void AppTitleBar_SizeChanged(object sender, SizeChangedEventArgs e) {
+        if (App.MainWindow.ExtendsContentIntoTitleBar == true) {
             SetRegionsForCustomTitleBar();
 
             // Only show the fitted connection status button if the user really is offline
-            if (!_networkService.IsOffline) return; 
-            if (AppTitleBar.ActualWidth < 700)
-            {
+            if (!_networkService.IsOffline) return;
+            if (AppTitleBar.ActualWidth < 700) {
                 ConnectionStatusButtonText.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
+            } else {
                 ConnectionStatusButtonText.Visibility = Visibility.Visible;
             }
-            if (AppTitleBar.ActualWidth < 600)
-            {
+            if (AppTitleBar.ActualWidth < 600) {
                 ConnectionStatusButton.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
+            } else {
                 ConnectionStatusButton.Visibility = Visibility.Visible;
             }
         }
     }
 
-    private void SetRegionsForCustomTitleBar()
-    {
+    private void SetRegionsForCustomTitleBar() {
         if (AppTitleBar.XamlRoot == null) return;
         var scaleAdjustment = AppTitleBar.XamlRoot.RasterizationScale;
         RightPaddingColumn.Width = new GridLength(m_AppWindow.TitleBar.RightInset / scaleAdjustment);
@@ -180,8 +153,7 @@ public sealed partial class ShellPage : Page
     }
 
 
-    private RectInt32 GetRect(Rect bounds, double scale)
-    {
+    private RectInt32 GetRect(Rect bounds, double scale) {
         return new RectInt32(
             _X: (int)Math.Round(bounds.X * scale),
             _Y: (int)Math.Round(bounds.Y * scale),
@@ -190,8 +162,7 @@ public sealed partial class ShellPage : Page
         );
     }
 
-    private async void OnLoaded(object sender, RoutedEventArgs e)
-    {
+    private async void OnLoaded(object sender, RoutedEventArgs e) {
         TitleBarHelper.UpdateTitleBar(RequestedTheme);
 
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
@@ -199,68 +170,55 @@ public sealed partial class ShellPage : Page
         await LoadContents();
     }
 
-    public async Task LoadContents()
-    {
+    public async Task LoadContents() {
         await _SpWrapper.AutoLoginAsync();
     }
 
-    public async void UpdateLoginStatusUi()
-    {
-        if (_authService.isLoggedIn)
-        {
+    public async void UpdateLoginStatusUi() {
+        if (_authService.isLoggedIn) {
             LoginItem.Visibility = Visibility.Collapsed;
             AccountItem.Visibility = Visibility.Visible;
             AccountItem.Content = await _SpWrapper.GetFullNameAsync();
             AccountFlyoutNameText.Text = await _SpWrapper.GetFullNameAsync() + " (" + await _SpWrapper.GetSchoolClassAsync() + ")";
-            AccountFlyoutLogoutButton.Click += async (sender, e) =>
-            {
+            AccountFlyoutLogoutButton.Click += async (sender, e) => {
                 await _SpWrapper.LogoutAsync();
                 NavigationFrame.Navigate(typeof(LoginPage));
                 NavigationViewControl.Header = "Login";
                 AccountFlyout.Hide();
                 UpdateLoginStatusUi();
             };
-        }
-        else
-        {
+        } else {
             LoginItem.Visibility = Visibility.Visible;
             AccountItem.Visibility = Visibility.Collapsed;
         }
     }
 
-    private void ConnectionStatusFlyoutReconnectButton_Click(object sender, RoutedEventArgs e)
-    {
+    private void ConnectionStatusFlyoutReconnectButton_Click(object sender, RoutedEventArgs e) {
         // Reconnect to the internet
         _SpWrapper.PingSchulportal();
         ConnectionStatusFlyout.Hide();
     }
 
-    private void NavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
-    {
+    private void NavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e) {
         AccountFlyout?.ShowAt(AccountItem);
     }
 
-    private void LoginItem_Tapped(object sender, TappedRoutedEventArgs e)
-    {
+    private void LoginItem_Tapped(object sender, TappedRoutedEventArgs e) {
         NavigationFrame.Navigate(typeof(LoginPage));
         NavigationViewControl.Header = "Login";
     }
 
-    public void AuthService_OnLoggedIn()
-    {
+    public void AuthService_OnLoggedIn() {
         UpdateLoginStatusUi();
         ShowSuccess("Success", "Logged in successfully");
     }
 
-    private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
-    {
+    private void MainWindow_Activated(object sender, WindowActivatedEventArgs args) {
         App.AppTitlebar = AppTitleBarText as UIElement;
     }
 
-    private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
-    {
-        AppTitleBar.Margin = new Thickness()
-        {
+    private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args) {
+        AppTitleBar.Margin = new Thickness() {
             Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
             Top = AppTitleBar.Margin.Top,
             Right = AppTitleBar.Margin.Right,
@@ -268,12 +226,10 @@ public sealed partial class ShellPage : Page
         };
     }
 
-    private static KeyboardAccelerator BuildKeyboardAccelerator(VirtualKey key, VirtualKeyModifiers? modifiers = null)
-    {
+    private static KeyboardAccelerator BuildKeyboardAccelerator(VirtualKey key, VirtualKeyModifiers? modifiers = null) {
         var keyboardAccelerator = new KeyboardAccelerator() { Key = key };
 
-        if (modifiers.HasValue)
-        {
+        if (modifiers.HasValue) {
             keyboardAccelerator.Modifiers = modifiers.Value;
         }
 
@@ -282,8 +238,7 @@ public sealed partial class ShellPage : Page
         return keyboardAccelerator;
     }
 
-    private static void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-    {
+    private static void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args) {
         var navigationService = App.GetService<INavigationService>();
 
         var result = navigationService.GoBack();
@@ -291,5 +246,5 @@ public sealed partial class ShellPage : Page
         args.Handled = result;
     }
 
-    
+
 }

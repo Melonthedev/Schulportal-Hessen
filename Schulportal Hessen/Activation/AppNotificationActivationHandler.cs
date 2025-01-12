@@ -8,24 +8,20 @@ using Schulportal_Hessen.ViewModels;
 
 namespace Schulportal_Hessen.Activation;
 
-public class AppNotificationActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
-{
+public class AppNotificationActivationHandler : ActivationHandler<LaunchActivatedEventArgs> {
     private readonly INavigationService _navigationService;
     private readonly IAppNotificationService _notificationService;
 
-    public AppNotificationActivationHandler(INavigationService navigationService, IAppNotificationService notificationService)
-    {
+    public AppNotificationActivationHandler(INavigationService navigationService, IAppNotificationService notificationService) {
         _navigationService = navigationService;
         _notificationService = notificationService;
     }
 
-    protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
-    {
+    protected override bool CanHandleInternal(LaunchActivatedEventArgs args) {
         return AppInstance.GetCurrent().GetActivatedEventArgs()?.Kind == ExtendedActivationKind.AppNotification;
     }
 
-    protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args)
-    {
+    protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args) {
         // TODO: Handle notification activations.
 
         //// // Access the AppNotificationActivatedEventArgs.
@@ -41,8 +37,7 @@ public class AppNotificationActivationHandler : ActivationHandler<LaunchActivate
         ////     });
         //// }
 
-        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-        {
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () => {
             App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification activations.", "Notification Activation");
         });
 

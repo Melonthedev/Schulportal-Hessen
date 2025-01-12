@@ -1,10 +1,6 @@
-﻿using System.Diagnostics;
-using System.Net.Http;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
 using Schulportal_Hessen.Activation;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Core.Contracts.Services;
@@ -15,26 +11,24 @@ using Schulportal_Hessen.Notifications;
 using Schulportal_Hessen.Services;
 using Schulportal_Hessen.ViewModels;
 using Schulportal_Hessen.Views;
+using System.Diagnostics;
+using System.Net.Http;
 
 namespace Schulportal_Hessen;
 
-public partial class App : Application
-{
+public partial class App : Application {
     // The .NET Generic Host provides dependency injection, configuration, logging, and other services.
     // https://docs.microsoft.com/dotnet/core/extensions/generic-host
     // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
     // https://docs.microsoft.com/dotnet/core/extensions/configuration
     // https://docs.microsoft.com/dotnet/core/extensions/logging
-    public IHost Host
-    {
+    public IHost Host {
         get;
     }
 
     public static T GetService<T>()
-        where T : class
-    {
-        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
-        {
+        where T : class {
+        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service) {
             throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
         }
 
@@ -45,15 +39,13 @@ public partial class App : Application
 
     public static UIElement? AppTitlebar { get; set; }
 
-    public App()
-    {
+    public App() {
         InitializeComponent();
 
         Host = Microsoft.Extensions.Hosting.Host
         .CreateDefaultBuilder()
         .UseContentRoot(AppContext.BaseDirectory)
-        .ConfigureServices((context, services) =>
-        {
+        .ConfigureServices((context, services) => {
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
@@ -79,6 +71,7 @@ public partial class App : Application
             services.AddSingleton<ErrorService>();
             services.AddSingleton<AuthService>();
             services.AddSingleton<SpWrapper>();
+            services.AddSingleton<TimeTableService>();
 
             // Views and ViewModels
             services.AddTransient<LoginViewModel>();
@@ -114,8 +107,7 @@ public partial class App : Application
         UnhandledException += App_UnhandledException;
     }
 
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
-    {
+    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e) {
         // TODO: Log and handle exceptions as appropriate.
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
         //Debug.WriteLine(e.Exception.ToString());
@@ -126,8 +118,7 @@ public partial class App : Application
         }*/
     }
 
-    protected async override void OnLaunched(LaunchActivatedEventArgs args)
-    {
+    protected async override void OnLaunched(LaunchActivatedEventArgs args) {
         base.OnLaunched(args);
 
         App.GetService<IAppNotificationService>().Show(string.Format("AppNotificationSamplePayload".GetLocalized(), AppContext.BaseDirectory));

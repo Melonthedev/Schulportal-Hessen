@@ -2,10 +2,8 @@
 
 namespace Schulportal_Hessen.Contracts.Services;
 
-public interface IThemeSelectorService
-{
-    ElementTheme Theme
-    {
+public interface IThemeSelectorService {
+    ElementTheme Theme {
         get;
     }
 

@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Schulportal_Hessen.Models;
-internal class SpUser
-{
+internal class SpUser {
     public string? DisplayName { get; set; }
 
 

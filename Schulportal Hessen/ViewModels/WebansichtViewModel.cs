@@ -12,8 +12,7 @@ namespace Schulportal_Hessen.ViewModels;
 // https://docs.microsoft.com/microsoft-edge/webview2/get-started/winui
 // https://docs.microsoft.com/microsoft-edge/webview2/concepts/developer-guide
 // https://docs.microsoft.com/microsoft-edge/webview2/concepts/distribution
-public partial class WebansichtViewModel : ObservableRecipient, INavigationAware
-{
+public partial class WebansichtViewModel : ObservableRecipient, INavigationAware {
     // TODO: Set the default URL to display.
     [ObservableProperty]
     private Uri source = new("https://start.schulportal.hessen.de/index.php");
@@ -24,85 +23,69 @@ public partial class WebansichtViewModel : ObservableRecipient, INavigationAware
     [ObservableProperty]
     private bool hasFailures;
 
-    public IWebViewService WebViewService
-    {
+    public IWebViewService WebViewService {
         get;
     }
 
-    public WebansichtViewModel(IWebViewService webViewService)
-    {
+    public WebansichtViewModel(IWebViewService webViewService) {
         WebViewService = webViewService;
     }
 
     [RelayCommand]
-    private async Task OpenInBrowser()
-    {
-        if (WebViewService.Source != null)
-        {
+    private async Task OpenInBrowser() {
+        if (WebViewService.Source != null) {
             await Windows.System.Launcher.LaunchUriAsync(WebViewService.Source);
         }
     }
 
     [RelayCommand]
-    private void Reload()
-    {
+    private void Reload() {
         WebViewService.Reload();
     }
 
     [RelayCommand(CanExecute = nameof(BrowserCanGoForward))]
-    private void BrowserForward()
-    {
-        if (WebViewService.CanGoForward)
-        {
+    private void BrowserForward() {
+        if (WebViewService.CanGoForward) {
             WebViewService.GoForward();
         }
     }
 
-    private bool BrowserCanGoForward()
-    {
+    private bool BrowserCanGoForward() {
         return WebViewService.CanGoForward;
     }
 
     [RelayCommand(CanExecute = nameof(BrowserCanGoBack))]
-    private void BrowserBack()
-    {
-        if (WebViewService.CanGoBack)
-        {
+    private void BrowserBack() {
+        if (WebViewService.CanGoBack) {
             WebViewService.GoBack();
         }
     }
 
-    private bool BrowserCanGoBack()
-    {
+    private bool BrowserCanGoBack() {
         return WebViewService.CanGoBack;
     }
 
-    public void OnNavigatedTo(object parameter)
-    {
+    public void OnNavigatedTo(object parameter) {
         WebViewService.NavigationCompleted += OnNavigationCompleted;
     }
 
-    public void OnNavigatedFrom()
-    {
+    public void OnNavigatedFrom() {
         WebViewService.UnregisterEvents();
         WebViewService.NavigationCompleted -= OnNavigationCompleted;
     }
 
-    private void OnNavigationCompleted(object? sender, CoreWebView2WebErrorStatus webErrorStatus)
-    {
+    private void OnNavigationCompleted(object? sender, CoreWebView2WebErrorStatus webErrorStatus) {
         IsLoading = false;
         BrowserBackCommand.NotifyCanExecuteChanged();
         BrowserForwardCommand.NotifyCanExecuteChanged();
 
-        if (webErrorStatus != default)
-        {
+        if (webErrorStatus != default) {
             HasFailures = true;
         }
     }
 
     [RelayCommand]
-    private void OnRetry()
-    {
+    private void OnRetry() {
         HasFailures = false;
         IsLoading = true;
         WebViewService?.Reload();

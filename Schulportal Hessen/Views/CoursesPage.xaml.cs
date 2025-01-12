@@ -4,15 +4,10 @@ using Schulportal_Hessen.ViewModels;
 
 namespace Schulportal_Hessen.Views;
 
-public sealed partial class CoursesPage : Page
-{
-    public CoursesViewModel ViewModel
-    {
-        get;
-    }
+public sealed partial class CoursesPage : Page {
+    public CoursesViewModel ViewModel { get; }
 
-    public CoursesPage()
-    {
+    public CoursesPage() {
         ViewModel = App.GetService<CoursesViewModel>();
         InitializeComponent();
     }

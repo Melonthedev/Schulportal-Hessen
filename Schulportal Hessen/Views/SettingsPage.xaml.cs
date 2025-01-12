@@ -5,15 +5,10 @@ using Schulportal_Hessen.ViewModels;
 namespace Schulportal_Hessen.Views;
 
 // TODO: Set the URL for your privacy policy by updating SettingsPage_PrivacyTermsLink.NavigateUri in Resources.resw.
-public sealed partial class SettingsPage : Page
-{
-    public SettingsViewModel ViewModel
-    {
-        get;
-    }
+public sealed partial class SettingsPage : Page {
+    public SettingsViewModel ViewModel { get; }
 
-    public SettingsPage()
-    {
+    public SettingsPage() {
         ViewModel = App.GetService<SettingsViewModel>();
         InitializeComponent();
     }

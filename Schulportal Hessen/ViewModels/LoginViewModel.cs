@@ -2,9 +2,7 @@
 
 namespace Schulportal_Hessen.ViewModels;
 
-public partial class LoginViewModel : ObservableRecipient
-{
-    public LoginViewModel()
-    {
+public partial class LoginViewModel : ObservableRecipient {
+    public LoginViewModel() {
     }
 }

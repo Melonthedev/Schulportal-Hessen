@@ -1,36 +1,29 @@
-﻿using System.Collections.Specialized;
-using System.Web;
-
-using Microsoft.Windows.AppNotifications;
-
+﻿using Microsoft.Windows.AppNotifications;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.ViewModels;
+using System.Collections.Specialized;
+using System.Web;
 
 namespace Schulportal_Hessen.Notifications;
 
-public class AppNotificationService : IAppNotificationService
-{
+public class AppNotificationService : IAppNotificationService {
     private readonly INavigationService _navigationService;
 
-    public AppNotificationService(INavigationService navigationService)
-    {
+    public AppNotificationService(INavigationService navigationService) {
         _navigationService = navigationService;
     }
 
-    ~AppNotificationService()
-    {
+    ~AppNotificationService() {
         Unregister();
     }
 
-    public void Initialize()
-    {
+    public void Initialize() {
         AppNotificationManager.Default.NotificationInvoked += OnNotificationInvoked;
 
         AppNotificationManager.Default.Register();
     }
 
-    public void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
-    {
+    public void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args) {
         // TODO: Handle notification invocations when your app is already running.
 
         //// // Navigate to a specific page based on the notification arguments.
@@ -42,16 +35,14 @@ public class AppNotificationService : IAppNotificationService
         ////    });
         //// }
 
-        App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-        {
+        App.MainWindow.DispatcherQueue.TryEnqueue(() => {
             App.MainWindow.ShowMessageDialogAsync("TODO: Handle notification invocations when your app is already running.", "Notification Invoked");
 
             App.MainWindow.BringToFront();
         });
     }
 
-    public bool Show(string payload)
-    {
+    public bool Show(string payload) {
         var appNotification = new AppNotification(payload);
 
         AppNotificationManager.Default.Show(appNotification);
@@ -59,13 +50,11 @@ public class AppNotificationService : IAppNotificationService
         return appNotification.Id != 0;
     }
 
-    public NameValueCollection ParseArguments(string arguments)
-    {
+    public NameValueCollection ParseArguments(string arguments) {
         return HttpUtility.ParseQueryString(arguments);
     }
 
-    public void Unregister()
-    {
+    public void Unregister() {
         AppNotificationManager.Default.Unregister();
     }
 }

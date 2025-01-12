@@ -7,19 +7,16 @@ using Schulportal_Hessen.Contracts.Services;
 
 namespace Schulportal_Hessen.Behaviors;
 
-public class NavigationViewHeaderBehavior : Behavior<NavigationView>
-{
+public class NavigationViewHeaderBehavior : Behavior<NavigationView> {
     private static NavigationViewHeaderBehavior? _current;
 
     private Page? _currentPage;
 
-    public DataTemplate? DefaultHeaderTemplate
-    {
+    public DataTemplate? DefaultHeaderTemplate {
         get; set;
     }
 
-    public object DefaultHeader
-    {
+    public object DefaultHeader {
         get => GetValue(DefaultHeaderProperty);
         set => SetValue(DefaultHeaderProperty, value);
     }
@@ -48,8 +45,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     public static readonly DependencyProperty HeaderTemplateProperty =
         DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current!.UpdateHeaderTemplate()));
 
-    protected override void OnAttached()
-    {
+    protected override void OnAttached() {
         base.OnAttached();
 
         var navigationService = App.GetService<INavigationService>();
@@ -58,18 +54,15 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
         _current = this;
     }
 
-    protected override void OnDetaching()
-    {
+    protected override void OnDetaching() {
         base.OnDetaching();
 
         var navigationService = App.GetService<INavigationService>();
         navigationService.Navigated -= OnNavigated;
     }
 
-    private void OnNavigated(object sender, NavigationEventArgs e)
-    {
-        if (sender is Frame frame && frame.Content is Page page)
-        {
+    private void OnNavigated(object sender, NavigationEventArgs e) {
+        if (sender is Frame frame && frame.Content is Page page) {
             _currentPage = page;
 
             UpdateHeader();
@@ -77,44 +70,31 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
         }
     }
 
-    private void UpdateHeader()
-    {
-        if (_currentPage != null)
-        {
+    private void UpdateHeader() {
+        if (_currentPage != null) {
             var headerMode = GetHeaderMode(_currentPage);
-            if (headerMode == NavigationViewHeaderMode.Never)
-            {
+            if (headerMode == NavigationViewHeaderMode.Never) {
                 AssociatedObject.Header = null;
                 AssociatedObject.AlwaysShowHeader = false;
-            }
-            else
-            {
+            } else {
                 var headerFromPage = GetHeaderContext(_currentPage);
-                if (headerFromPage != null)
-                {
+                if (headerFromPage != null) {
                     AssociatedObject.Header = headerFromPage;
-                }
-                else
-                {
+                } else {
                     AssociatedObject.Header = DefaultHeader;
                 }
 
-                if (headerMode == NavigationViewHeaderMode.Always)
-                {
+                if (headerMode == NavigationViewHeaderMode.Always) {
                     AssociatedObject.AlwaysShowHeader = true;
-                }
-                else
-                {
+                } else {
                     AssociatedObject.AlwaysShowHeader = false;
                 }
             }
         }
     }
 
-    private void UpdateHeaderTemplate()
-    {
-        if (_currentPage != null)
-        {
+    private void UpdateHeaderTemplate() {
+        if (_currentPage != null) {
             var headerTemplate = GetHeaderTemplate(_currentPage);
             AssociatedObject.HeaderTemplate = headerTemplate ?? DefaultHeaderTemplate;
         }
