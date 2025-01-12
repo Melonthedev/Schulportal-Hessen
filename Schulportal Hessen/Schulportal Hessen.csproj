@@ -49,6 +49,7 @@
 	<WindowsSdkPackageVersion>10.0.19041.41</WindowsSdkPackageVersion>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Schulportal Hessen.API\Schulportal Hessen.API.csproj" />
     <ProjectReference Include="..\Schulportal Hessen.Core\Schulportal Hessen.Core.csproj" />
   </ItemGroup>
 

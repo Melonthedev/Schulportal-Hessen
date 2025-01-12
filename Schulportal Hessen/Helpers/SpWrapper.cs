@@ -85,10 +85,10 @@ public class SpWrapper
         var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
-        var nachname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[2]/td[2]");
-        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[3]/td[2]");
+        var nachname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[2]/td[2]");
+        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[3]/td[2]");
         if (nachname == null || vorname == null) return null;
-        var name = vorname.InnerText + " " + nachname.InnerText;
+        var name = vorname.InnerText.Trim() + " " + nachname.InnerText.Trim();
         return name;
     }
 
@@ -97,9 +97,9 @@ public class SpWrapper
         var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
-        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[3]/td[2]");
+        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[3]/td[2]");
         if (vorname == null) return null;
-        var name = vorname.InnerText;
+        var name = vorname.InnerText.Trim();
         return name;
     }
 
@@ -119,9 +119,9 @@ public class SpWrapper
         var html = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
-        var schoolClass = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[6]/td[2]");
+        var schoolClass = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[6]/td[2]");
         if (schoolClass == null) return null;
-        return schoolClass.InnerHtml;
+        return schoolClass.InnerHtml.Trim();
     }
 
     public async Task<List<TimeTableLesson>> GetTimetableAsync()
