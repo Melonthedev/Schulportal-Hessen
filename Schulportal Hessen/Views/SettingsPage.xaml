@@ -13,40 +13,65 @@
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        <helpers:StringToEnumConverter x:Key="StringToEnumConverter" />
     </Page.Resources>
+    
     <Grid>
         <ScrollViewer>
-
             <StackPanel
                 x:Name="ContentArea"
                 Spacing="4"
                 HorizontalAlignment="Center"
                 MaxWidth="10000"
                 Margin="0 10 50 10">
-                <StackPanel 
-                Orientation="Horizontal" 
-                HorizontalAlignment="Center"
-                Margin="0 80 0 50">
-                    <Image Source="/Assets/WindowIcon.ico"
-                   HorizontalAlignment="Left"
-                   Width="80"
-                   Height="80"
-                   Grid.Column="1"/>
-                    <TextBlock VerticalAlignment="Center" Margin="15" FontSize="50" FontFamily="Cascadia Code">Schulportal Hessen</TextBlock>
 
-                </StackPanel>
-                <TextBlock FontWeight="Bold" Margin="0 5">Settings 1</TextBlock>
+                <Viewbox Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="800">
+                    <StackPanel 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center"
+                        Margin="0 80 0 50">
+                        <Image Source="/Assets/WindowIcon.ico"
+                           HorizontalAlignment="Left"
+                           Width="80"
+                           Height="80"
+                           Grid.Column="1"/>
+                        <TextBlock VerticalAlignment="Center" Margin="15" FontSize="50" FontFamily="Cascadia Code">Schulportal Hessen</TextBlock>
+                    </StackPanel>
+                </Viewbox>
 
-                <controls:SettingsCard x:Name="settingsCard"
+
+                <TextBlock FontWeight="Bold" Margin="0 5">Apperance</TextBlock>
+                
+                <controls:SettingsCard x:Name="backdropSettingsCard"
                    Description="Different backgroud blur effects for the app"
                    Header="App Backdrop"
-                   HeaderIcon="{ui:FontIcon Glyph=&#xE9A6;}">
-                    <ComboBox 
+                   HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
+                    <ComboBox
                         x:Name="SystemBackdropComboBox"
-                        SelectedIndex="0"
-                        SelectionChanged="ComboBox_SelectionChanged">
-                        <ComboBoxItem>Mica</ComboBoxItem>
-                        <ComboBoxItem>Acrylic</ComboBoxItem>
+                        SelectedValuePath="Tag"
+                        SelectedValue="{x:Bind ViewModel.Backdrop, Mode=TwoWay}">
+                        <ComboBoxItem Content="Acrylic" Tag="ACRYLIC" />
+                        <ComboBoxItem Content="Mica" Tag="MICA" />
+                        <ComboBoxItem Content="None" Tag="NONE" />
+                        <ComboBoxItem Content="Solid Color" Tag="SOLID" />
+                        <ComboBoxItem Content="Accent Color" Tag="ACCENT" />
+                        <ComboBoxItem Content="Rainbow" Tag="RAINBOW" />
+                        <ComboBoxItem Content="Gradient" Tag="GRADIENT" />
+                        <ComboBoxItem Content="Image" Tag="IMAGE" />
+                    </ComboBox>
+                </controls:SettingsCard>
+
+                <controls:SettingsCard x:Name="themeSettingsCard"
+                   Description="Light Mode/Dark Mode"
+                   Header="Theme"
+                   HeaderIcon="{ui:FontIcon Glyph=&#xE793;}">
+                    <ComboBox
+                        x:Name="SystemThemeComboBox"
+                        SelectedValuePath="Tag"
+                        SelectedValue="{x:Bind ViewModel.ElementTheme, Mode=TwoWay, Converter={StaticResource StringToEnumConverter}}">
+                        <ComboBoxItem Content="Dark" Tag="Dark" />
+                        <ComboBoxItem Content="Light" Tag="Light" />
+                        <ComboBoxItem Content="Default" Tag="Default" />
                     </ComboBox>
                 </controls:SettingsCard>
 

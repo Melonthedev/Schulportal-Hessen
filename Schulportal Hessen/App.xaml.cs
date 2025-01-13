@@ -74,11 +74,12 @@ public partial class App : Application {
             services.AddSingleton<AuthService>();
             services.AddSingleton<SpWrapper>();
             services.AddSingleton<TimeTableService>();
+            services.AddSingleton<SettingsService>();
 
             // Views and ViewModels
             services.AddTransient<LoginViewModel>();
             services.AddTransient<LoginPage>();
-            services.AddTransient<SettingsViewModel>();
+            services.AddSingleton<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<ChatsViewModel>();
             services.AddTransient<ChatsPage>();
