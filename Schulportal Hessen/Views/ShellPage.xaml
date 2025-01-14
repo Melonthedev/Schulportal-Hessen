@@ -9,7 +9,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     Loaded="OnLoaded">
 
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid x:Name="AppTitleBar"
               Canvas.ZIndex="10"
               Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"

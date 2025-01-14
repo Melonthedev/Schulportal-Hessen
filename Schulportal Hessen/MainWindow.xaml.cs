@@ -5,6 +5,8 @@ using Schulportal_Hessen.Helpers;
 using Windows.UI.ViewManagement;
 using System.Diagnostics;
 using Schulportal_Hessen.Views;
+using Schulportal_Hessen.ViewModels;
+using Schulportal_Hessen.Services;
 
 namespace Schulportal_Hessen;
 
@@ -22,11 +24,13 @@ public sealed partial class MainWindow : WindowEx {
         dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         settings = new UISettings();
         settings.ColorValuesChanged += Settings_ColorValuesChanged;
-        ApplySelectedBackdrop();
-        SettingsPage.BackdropChanged += SettingsPage_BackdropChanged;
+        //ApplySelectedBackdrop();
+        //SettingsPage.BackdropChanged += SettingsPage_BackdropChanged;
+        var SettingsService = App.GetService<SettingsService>();
+        SettingsService.UpdateBackdrop += SettingsService_UpdateBackdrop;
     }
 
-    private void SettingsPage_BackdropChanged(object? sender, EventArgs e) => ApplySelectedBackdrop();
+    private void SettingsService_UpdateBackdrop(object? sender, EventArgs e) => ApplySelectedBackdrop();
 
     // this handles updating the caption button colors correctly when indows system theme is changed
     // while the app is open
@@ -36,16 +40,14 @@ public sealed partial class MainWindow : WindowEx {
 
     private void ApplySelectedBackdrop() {
         var localSettings = ApplicationData.Current.LocalSettings;
-        var selectedSystemBackdrop = localSettings.Values["SystemBackdrop"] as string;
-        Debug.WriteLine(selectedSystemBackdrop);
-        if (selectedSystemBackdrop is null) return;
-        switch (selectedSystemBackdrop.ToUpper()) {
-            case "MICA":
-                this.SystemBackdrop = new MicaBackdrop();
-                break;
-            case "ACRYLIC":
-                this.SystemBackdrop = new DesktopAcrylicBackdrop();
-                break;
-        }
+        if (localSettings.Values["SystemBackdrop"] is not string selectedSystemBackdrop) return;
+        SystemBackdrop = selectedSystemBackdrop.ToUpper() switch {
+            "MICA" => new MicaBackdrop(),
+            "ACRYLIC" => new DesktopAcrylicBackdrop(),
+            "NONE" => null,
+            "IMAGE" => new MicaBackdrop(),
+            _ => null
+        };
+        Debug.WriteLine("Applying Backdrop: " + selectedSystemBackdrop);
     }
 }
