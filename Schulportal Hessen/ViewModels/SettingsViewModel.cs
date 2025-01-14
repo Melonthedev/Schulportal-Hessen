@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Helpers;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Reflection;
 using System.Windows.Input;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.UI;
 
 namespace Schulportal_Hessen.ViewModels;
 
@@ -38,6 +40,19 @@ public partial class SettingsViewModel : ObservableRecipient, INotifyPropertyCha
     [ObservableProperty]
     private string _configVersionDescription;
 
+    private Color _color;
+
+    public Color Color {
+        get => _color;
+        set {
+            if (_color != value) {
+                _color = value;
+
+                LocalSettings.Values["SystemBackdropColor"] = value;
+                OnPropertyChanged(nameof(Color));
+            }
+        }
+    }
 
     private string _backdrop = "MICA";
 

@@ -14,6 +14,27 @@
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
         <helpers:StringToEnumConverter x:Key="StringToEnumConverter" />
+        <Flyout x:Key="colorPickerFlyout">
+            <RelativePanel>
+                <ColorPicker x:Name="colorPicker"
+                         IsColorChannelTextInputVisible="False"
+                         IsHexInputVisible="False"/>
+
+                <Grid RelativePanel.Below="colorPicker"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="OK" Click="confirmColor_Click"
+                        Margin="0,12,2,0" HorizontalAlignment="Stretch"/>
+                    <Button Content="Cancel" Click="cancelColor_Click"
+                        Margin="2,12,0,0" HorizontalAlignment="Stretch"
+                        Grid.Column="1"/>
+                </Grid>
+            </RelativePanel>
+        </Flyout>
     </Page.Resources>
     
     <Grid>
@@ -42,7 +63,7 @@
 
                 <TextBlock FontWeight="Bold" Margin="0 5">Apperance</TextBlock>
                 
-                <controls:SettingsCard x:Name="backdropSettingsCard"
+                <controls:SettingsExpander x:Name="backdropSettingsCard"
                    Description="Different backgroud blur effects for the app"
                    Header="App Backdrop"
                    HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
@@ -59,7 +80,16 @@
                         <ComboBoxItem Content="Gradient" Tag="GRADIENT" />
                         <ComboBoxItem Content="Image" Tag="IMAGE" />
                     </ComboBox>
-                </controls:SettingsCard>
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard x:Name="backdropColorSettingsCard"
+                           Description="Light Mode/Dark Mode"
+                           Header="Theme"
+                           HeaderIcon="{ui:FontIcon Glyph=&#xE793;}">
+                            <Button x:Name="colorPickerButton" Background="Gray" Width="40" Height="40" CornerRadius="5" Flyout="{StaticResource colorPickerFlyout}">
+                            </Button>
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                </controls:SettingsExpander>
 
                 <controls:SettingsCard x:Name="themeSettingsCard"
                    Description="Light Mode/Dark Mode"

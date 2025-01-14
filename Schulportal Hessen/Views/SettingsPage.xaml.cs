@@ -1,5 +1,6 @@
-﻿using Microsoft.UI.Xaml.Controls;
-
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Schulportal_Hessen.ViewModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -17,7 +18,19 @@ public sealed partial class SettingsPage : Page {
         InitializeComponent();
     }
 
+    private void confirmColor_Click(object sender, RoutedEventArgs e) {
+        // Assign the selected color to a variable to use outside the popup.
+        ViewModel.Color = colorPicker.Color;
+        colorPickerButton.Background = new SolidColorBrush(ViewModel.Color);
 
+        // Close the Flyout.
+        colorPickerButton.Flyout.Hide();
+    }
+
+    private void cancelColor_Click(object sender, RoutedEventArgs e) {
+        // Close the Flyout.
+        colorPickerButton.Flyout.Hide();
+    }
     /*private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
         Debug.WriteLine("HELLO");
         var localSettings = ApplicationData.Current.LocalSettings;
