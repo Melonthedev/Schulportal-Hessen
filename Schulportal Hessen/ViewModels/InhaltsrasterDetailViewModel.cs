@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-
+using Microsoft.UI.Xaml.Media.Animation;
 using Schulportal_Hessen.Contracts.ViewModels;
 using Schulportal_Hessen.Core.Contracts.Services;
 using Schulportal_Hessen.Core.Models;

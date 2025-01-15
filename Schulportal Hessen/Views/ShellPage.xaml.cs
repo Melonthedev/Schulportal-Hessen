@@ -1,12 +1,9 @@
-﻿using CommunityToolkit.WinUI.Helpers;
-using Microsoft.UI;
-using Microsoft.UI.Input;
+﻿using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Helpers;
@@ -17,7 +14,6 @@ using Windows.Foundation;
 using Windows.Graphics;
 using Windows.System;
 using Windows.UI;
-using WinRT.Interop;
 
 namespace Schulportal_Hessen.Views;
 
@@ -65,8 +61,9 @@ public sealed partial class ShellPage : Page {
 
         if (_settingsService.LocalSettings.Values["SystemBackdrop"] is not string selectedSystemBackdrop) return;
         if (_settingsService.LocalSettings.Values["SystemBackdropColor"] == null) {
-            _settingsService.LocalSettings.Values["SystemBackdropColor"] = "#FFFF"; 
+            _settingsService.LocalSettings.Values["SystemBackdropColor"] = "255,255,87,51"; 
         }
+
 
         switch (selectedSystemBackdrop.ToUpper()) {
             case "MICA":
@@ -82,7 +79,7 @@ public sealed partial class ShellPage : Page {
                     EndPoint = new Windows.Foundation.Point(1, 1),
                     GradientStops =
                     {
-                        new GradientStop { Color = CommunityToolkit.WinUI.Helpers.ColorHelper.ToColor("#FFFF"), Offset = 0 },
+                        new GradientStop { Color = Microsoft.UI.Colors.Blue, Offset = 0 },
                         new GradientStop { Color = Microsoft.UI.Colors.OrangeRed, Offset = 1 }
                     }
                 };

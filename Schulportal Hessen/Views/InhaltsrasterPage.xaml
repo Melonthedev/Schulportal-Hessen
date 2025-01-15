@@ -4,27 +4,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:models="using:Schulportal_Hessen.Core.Models"
+    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        <controls:AdaptiveGridView
+        <GridView
             animations:Connected.ListItemElementName="itemThumbnail"
             animations:Connected.ListItemKey="animationKeyContentGrid"
-            DesiredWidth="180"
-            ItemHeight="160"
             IsItemClickEnabled="True"
-            ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"
+            ItemClick="ItemClick"
             ItemsSource="{x:Bind ViewModel.Source,Mode=OneWay}"
-            SelectionMode="None"
-            StretchContentForSingleRow="False">
-            <controls:AdaptiveGridView.ItemTemplate>
+            SelectionMode="None">
+            <GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:SampleOrder">
                     <Grid
                         x:Name="itemThumbnail"
-                        Padding="{StaticResource XSmallLeftTopRightBottomMargin}">
+                        Padding="{StaticResource XSmallLeftTopRightBottomMargin}"
+                        Width="180"
+                        Height="160">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <FontIcon
                                 Glyph="{x:Bind Symbol}"
@@ -37,7 +35,7 @@
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
-            </controls:AdaptiveGridView.ItemTemplate>
-        </controls:AdaptiveGridView>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </Page>

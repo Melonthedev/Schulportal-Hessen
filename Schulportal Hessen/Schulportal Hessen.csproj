@@ -21,14 +21,15 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="CommunityToolkit.WinUI.Animations" Version="8.2.241112-preview1" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.241112-preview1" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
     <PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.241112-preview1" />
-	  <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
-	  <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
-	  <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Core" Version="7.1.2" />
-	  <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
-	<PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Primitives" Version="7.1.2" />
+	  <!--<PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />-->
+	  <!--<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+	 <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Core" Version="7.1.2" />-->
+	  <!--<PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />-->
+	<!--<PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Primitives" Version="7.1.2" />-->
 	<PackageReference Include="HtmlAgilityPack" Version="1.11.72" />
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
 	<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250109001-experimental2" />

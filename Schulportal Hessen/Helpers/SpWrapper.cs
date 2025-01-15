@@ -1,13 +1,6 @@
-﻿using ColorCode.Compilation.Languages;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using Schulportal_Hessen.Models;
 using Schulportal_Hessen.Services;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Schulportal_Hessen.Helpers;
 public class SpWrapper {

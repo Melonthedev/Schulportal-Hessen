@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.WinUI.UI.Animations;
+﻿using CommunityToolkit.WinUI.Animations;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Schulportal_Hessen.Contracts.Services;
@@ -102,5 +102,7 @@ public class NavigationService : INavigationService {
         }
     }
 
-    public void SetListDataItemForNextConnectedAnimation(object item) => Frame.SetListDataItemForNextConnectedAnimation(item);
+    public void SetListDataItemForNextConnectedAnimation(object item) =>
+        Frame.SetListDataItemForNextConnectedAnimation(item);
+    
 }
