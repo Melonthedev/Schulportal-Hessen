@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Input;
+﻿using CommunityToolkit.WinUI.Helpers;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -60,9 +61,10 @@ public sealed partial class ShellPage : Page {
     public void ApplyBackdrop() {
 
         if (_settingsService.LocalSettings.Values["SystemBackdrop"] is not string selectedSystemBackdrop) return;
-        if (_settingsService.LocalSettings.Values["SystemBackdropColor"] == null) {
-            _settingsService.LocalSettings.Values["SystemBackdropColor"] = "255,255,87,51"; 
-        }
+        /*if (_settingsService.LocalSettings.Values["PrimaryBackdropColor"] is null or not string) {
+            _settingsService.LocalSettings.Values["PrimaryBackdropColor"] = Colors.Aqua.ToHex(); 
+        }*/
+        string primaryBackdropColor = (string)_settingsService.LocalSettings.Values["PrimaryBackdropColor"];
 
 
         switch (selectedSystemBackdrop.ToUpper()) {
@@ -71,7 +73,7 @@ public sealed partial class ShellPage : Page {
                 MainGrid.Background = null;
                 return;
             case "SOLID":
-                MainGrid.Background = new SolidColorBrush((Color)_settingsService.LocalSettings.Values["SystemBackdropColor"]);
+                MainGrid.Background = new SolidColorBrush(ColorHelper.ToColor(primaryBackdropColor));
                 break;
             case "GRADIENT":
                 MainGrid.Background = new LinearGradientBrush {
@@ -79,8 +81,8 @@ public sealed partial class ShellPage : Page {
                     EndPoint = new Windows.Foundation.Point(1, 1),
                     GradientStops =
                     {
-                        new GradientStop { Color = Microsoft.UI.Colors.Blue, Offset = 0 },
-                        new GradientStop { Color = Microsoft.UI.Colors.OrangeRed, Offset = 1 }
+                        new GradientStop { Color = ColorHelper.ToColor((string)_settingsService.LocalSettings.Values["PrimaryGradientBackdropColor"]), Offset = 0 },
+                        new GradientStop { Color = ColorHelper.ToColor((string)_settingsService.LocalSettings.Values["SecondaryGradientBackdropColor"]), Offset = 1 }
                     }
                 };
                 break;
@@ -91,13 +93,14 @@ public sealed partial class ShellPage : Page {
                     GradientStops =
                     {
                         new GradientStop { Color = Microsoft.UI.Colors.Red, Offset = 0 },
-                        new GradientStop { Color = Microsoft.UI.Colors.Orange, Offset = 0.17 },
+                        new GradientStop { Color = Microsoft.UI.Colors.OrangeRed, Offset = 0.17 },
                         new GradientStop { Color = Microsoft.UI.Colors.Yellow, Offset = 0.33 },
                         new GradientStop { Color = Microsoft.UI.Colors.Green, Offset = 0.5 },
                         new GradientStop { Color = Microsoft.UI.Colors.Blue, Offset = 0.67 },
                         new GradientStop { Color = Microsoft.UI.Colors.Indigo, Offset = 0.83 },
                         new GradientStop { Color = Microsoft.UI.Colors.Violet, Offset = 1 }
-                    }
+                    },
+                    Opacity = 0.2
                 };
                 break;
             case "ACCENT":

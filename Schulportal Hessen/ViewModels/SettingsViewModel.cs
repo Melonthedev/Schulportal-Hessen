@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Schulportal_Hessen.Contracts.Services;
@@ -40,21 +41,49 @@ public partial class SettingsViewModel : ObservableRecipient, INotifyPropertyCha
     [ObservableProperty]
     private string _configVersionDescription;
 
-    private Color _color;
+    private Color _primaryBackdropColor;
 
-    public Color Color {
-        get => _color;
+    public Color PrimaryBackdropColor {
+        get => _primaryBackdropColor;
         set {
-            if (_color != value) {
-                _color = value;
+            if (_primaryBackdropColor != value) {
+                _primaryBackdropColor = value;
 
-                LocalSettings.Values["SystemBackdropColor"] = value;
-                OnPropertyChanged(nameof(Color));
+                LocalSettings.Values["PrimaryBackdropColor"] = ColorHelper.ToHex(value);
+                OnPropertyChanged(nameof(PrimaryBackdropColor));
             }
         }
     }
 
-    private string _backdrop = "MICA";
+    private Color _primaryGradientBackdropColor;
+
+    public Color PrimaryGradientBackdropColor {
+        get => _primaryGradientBackdropColor;
+        set {
+            if (_primaryGradientBackdropColor != value) {
+                _primaryGradientBackdropColor = value;
+
+                LocalSettings.Values["PrimaryGradientBackdropColor"] = ColorHelper.ToHex(value);
+                OnPropertyChanged(nameof(PrimaryGradientBackdropColor));
+            }
+        }
+    }
+
+    private Color _secondaryGradientBackdropColor;
+
+    public Color SecondaryGradientBackdropColor {
+        get => _secondaryGradientBackdropColor;
+        set {
+            if (_secondaryGradientBackdropColor != value) {
+                _secondaryGradientBackdropColor = value;
+
+                LocalSettings.Values["SecondaryGradientBackdropColor"] = ColorHelper.ToHex(value);
+                OnPropertyChanged(nameof(SecondaryGradientBackdropColor));
+            }
+        }
+    }
+
+    private string _backdrop;
 
     public string Backdrop {
         get => _backdrop;
@@ -78,6 +107,9 @@ public partial class SettingsViewModel : ObservableRecipient, INotifyPropertyCha
         _elementTheme = _themeSelectorService.Theme;
         _versionDescription = GetVersionDescription();
         _backdrop = (string) LocalSettings.Values["SystemBackdrop"];
+        _primaryBackdropColor = LocalSettings.Values["PrimaryBackdropColor"] is null ? Microsoft.UI.Colors.DarkBlue : ColorHelper.ToColor((string)LocalSettings.Values["PrimaryBackdropColor"]);
+        _primaryGradientBackdropColor = LocalSettings.Values["PrimaryGradientBackdropColor"] is null ? Microsoft.UI.Colors.OrangeRed : ColorHelper.ToColor((string)LocalSettings.Values["PrimaryGradientBackdropColor"]);
+        _secondaryGradientBackdropColor = LocalSettings.Values["SecondaryGradientBackdropColor"] is null ? Microsoft.UI.Colors.DarkBlue : ColorHelper.ToColor((string)LocalSettings.Values["SecondaryGradientBackdropColor"]);
     }
 
     private static string GetVersionDescription() {

@@ -70,23 +70,45 @@
                     <ComboBox
                         x:Name="SystemBackdropComboBox"
                         SelectedValuePath="Tag"
-                        SelectedValue="{x:Bind ViewModel.Backdrop, Mode=TwoWay}">
-                        <ComboBoxItem Content="Acrylic" Tag="ACRYLIC" />
+                        SelectedValue="{x:Bind ViewModel.Backdrop, Mode=TwoWay}"
+                        SelectionChanged="SystemBackdropComboBox_SelectionChanged">
                         <ComboBoxItem Content="Mica" Tag="MICA" />
-                        <ComboBoxItem Content="None" Tag="NONE" />
+                        <ComboBoxItem Content="Acrylic" Tag="ACRYLIC" />
                         <ComboBoxItem Content="Solid Color" Tag="SOLID" />
+                        <ComboBoxItem Content="Gradient" Tag="GRADIENT" />
                         <ComboBoxItem Content="Accent Color" Tag="ACCENT" />
                         <ComboBoxItem Content="Rainbow" Tag="RAINBOW" />
-                        <ComboBoxItem Content="Gradient" Tag="GRADIENT" />
                         <ComboBoxItem Content="Image" Tag="IMAGE" />
+                        <ComboBoxItem Content="None" Tag="NONE" />
+                        
                     </ComboBox>
                     <controls:SettingsExpander.Items>
+                        <InfoBar
+                            IsOpen="True"
+                            IsClosable="False"
+                            Severity="Informational"
+                            Title="Customize your app"
+                            Message="Here you can find advanced theme configuration of the selected backdrop." 
+                            BorderThickness="0"
+                            Background="{StaticResource CardBackgroundFillColorSecondary}"
+                            CornerRadius="0"/>                
                         <controls:SettingsCard x:Name="backdropColorSettingsCard"
-                           Description="Light Mode/Dark Mode"
-                           Header="Theme"
-                           HeaderIcon="{ui:FontIcon Glyph=&#xE793;}">
-                            <Button x:Name="colorPickerButton" Background="Gray" Width="40" Height="40" CornerRadius="5" Flyout="{StaticResource colorPickerFlyout}">
-                            </Button>
+                            Header="Background Color"
+                            HeaderIcon="{ui:FontIcon Glyph=&#xE771;}"
+                            Visibility="Collapsed">
+                            <Button x:Name="colorPickerButton" Width="40" Height="40" CornerRadius="5" Flyout="{StaticResource colorPickerFlyout}" Click="colorPickerButton_Click"/>
+                        </controls:SettingsCard>
+                        <controls:SettingsCard x:Name="backdropGradientColorSettingsCard"
+                            Description="Select gradient colors"
+                            Header="Gradient"
+                            HeaderIcon="{ui:FontIcon Glyph=&#xf169;}"
+                            Visibility="Collapsed">
+                            <StackPanel
+                                Orientation="Horizontal" Spacing="10">
+                                <Button x:Name="primaryGradientColorPickerButton" Width="40" Height="40" CornerRadius="5" Flyout="{StaticResource colorPickerFlyout}" Click="colorPickerButton_Click"  />
+                                <Button x:Name="secondaryGradientColorPickerButton" Width="40" Height="40" CornerRadius="5" Flyout="{StaticResource colorPickerFlyout}" Click="colorPickerButton_Click"/>
+                            </StackPanel>
+                            
                         </controls:SettingsCard>
                     </controls:SettingsExpander.Items>
                 </controls:SettingsExpander>
