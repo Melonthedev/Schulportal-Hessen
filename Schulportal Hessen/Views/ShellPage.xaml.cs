@@ -1,11 +1,10 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Input;
+﻿using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Schulportal_Hessen.Contracts.Services;
 using Schulportal_Hessen.Helpers;
 using Schulportal_Hessen.Services;
@@ -14,7 +13,7 @@ using System.Diagnostics;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.System;
-using WinRT.Interop;
+using Windows.UI;
 
 namespace Schulportal_Hessen.Views;
 
@@ -26,13 +25,15 @@ public sealed partial class ShellPage : Page {
     private readonly ErrorService _errorService;
     private readonly NetworkService _networkService;
     private readonly AuthService _authService;
+    private readonly SettingsService _settingsService;
 
-    public ShellPage(ShellViewModel viewModel, SpWrapper spWrapper, ErrorService errorService, NetworkService networkService, AuthService authService) {
+    public ShellPage(ShellViewModel viewModel, SpWrapper spWrapper, ErrorService errorService, NetworkService networkService, AuthService authService, SettingsService settingsService) {
         ViewModel = viewModel;
         _SpWrapper = spWrapper;
         _errorService = errorService;
         _networkService = networkService;
         _authService = authService;
+        _settingsService = settingsService;
         m_AppWindow = App.MainWindow.AppWindow;
 
         InitializeComponent();
@@ -50,6 +51,66 @@ public sealed partial class ShellPage : Page {
         _errorService.OnErrorOccurred += ShowError;
         _networkService.OnConnectionStatusChanged += NetworkService_OnConnectionStatusChanged;
         _authService.OnLoggedIn += AuthService_OnLoggedIn;
+        _settingsService.UpdateBackdrop += SettingsService_UpdateBackdrop;
+        ApplyBackdrop();
+    }
+
+    private void SettingsService_UpdateBackdrop(object? sender, EventArgs e) => ApplyBackdrop();
+
+    public void ApplyBackdrop() {
+
+        if (_settingsService.LocalSettings.Values["SystemBackdrop"] is not string selectedSystemBackdrop) return;
+        if (_settingsService.LocalSettings.Values["SystemBackdropColor"] == null) {
+            _settingsService.LocalSettings.Values["SystemBackdropColor"] = "255,255,87,51"; 
+        }
+
+
+        switch (selectedSystemBackdrop.ToUpper()) {
+            case "MICA":
+            case "ACRYLIC":
+                MainGrid.Background = null;
+                return;
+            case "SOLID":
+                MainGrid.Background = new SolidColorBrush((Color)_settingsService.LocalSettings.Values["SystemBackdropColor"]);
+                break;
+            case "GRADIENT":
+                MainGrid.Background = new LinearGradientBrush {
+                    StartPoint = new Windows.Foundation.Point(0, 0),
+                    EndPoint = new Windows.Foundation.Point(1, 1),
+                    GradientStops =
+                    {
+                        new GradientStop { Color = Microsoft.UI.Colors.Blue, Offset = 0 },
+                        new GradientStop { Color = Microsoft.UI.Colors.OrangeRed, Offset = 1 }
+                    }
+                };
+                break;
+            case "RAINBOW":
+                MainGrid.Background = new LinearGradientBrush {
+                    StartPoint = new Windows.Foundation.Point(0, 0),
+                    EndPoint = new Windows.Foundation.Point(1, 1),
+                    GradientStops =
+                    {
+                        new GradientStop { Color = Microsoft.UI.Colors.Red, Offset = 0 },
+                        new GradientStop { Color = Microsoft.UI.Colors.Orange, Offset = 0.17 },
+                        new GradientStop { Color = Microsoft.UI.Colors.Yellow, Offset = 0.33 },
+                        new GradientStop { Color = Microsoft.UI.Colors.Green, Offset = 0.5 },
+                        new GradientStop { Color = Microsoft.UI.Colors.Blue, Offset = 0.67 },
+                        new GradientStop { Color = Microsoft.UI.Colors.Indigo, Offset = 0.83 },
+                        new GradientStop { Color = Microsoft.UI.Colors.Violet, Offset = 1 }
+                    }
+                };
+                break;
+            case "ACCENT":
+                MainGrid.Background = (AcrylicBrush)Application.Current.Resources["AccentAcrylicInAppFillColorBaseBrush"];
+                break;
+            case "IMAGE":
+                MainGrid.Background = new ImageBrush {
+                    ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/graduation.png")),
+                    Stretch = Stretch.UniformToFill
+                };
+                break;
+        };
+        Debug.WriteLine("Applying Backdrop: " + selectedSystemBackdrop);
     }
 
 

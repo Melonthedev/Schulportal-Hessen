@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.WinUI.UI.Controls;
-
+﻿
 using Microsoft.UI.Xaml.Controls;
 
 using Schulportal_Hessen.ViewModels;
@@ -14,9 +13,9 @@ public sealed partial class ChatsPage : Page {
         InitializeComponent();
     }
 
-    private void OnViewStateChanged(object sender, ListDetailsViewState e) {
+    /*private void OnViewStateChanged(object sender, ListDetailsViewState e) {
         if (e == ListDetailsViewState.Both) {
             ViewModel.EnsureItemSelected();
         }
-    }
+    }*/
 }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Schulportal_Hessen.Helpers;
 using Windows.Security.Credentials;
 using Windows.Storage;
 
@@ -44,7 +45,7 @@ public class AuthService {
                 new KeyValuePair<string, string>("stayconnected", "1"),
                 new KeyValuePair<string, string>("password", password)
         });
-
+        Debug.WriteLine("Authenticating with: " + user);
         // 1. GET SID REQUEST
         var responseSIDReq = await _networkService.PostAsync(loginUrl, postData);
         if (!responseSIDReq.Headers.Contains("Set-Cookie")) {

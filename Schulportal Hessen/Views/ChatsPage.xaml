@@ -4,10 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:models="using:Schulportal_Hessen.Core.Models"
     xmlns:views="using:Schulportal_Hessen.Views"
-    xmlns:behaviors="using:Schulportal_Hessen.Behaviors"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="ItemTemplate" x:DataType="models:SampleOrder">
@@ -82,18 +80,13 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <controls:ListDetailsView
+        <ListView
             x:Uid="Chats"
             x:Name="ChatsControl"
-            BackButtonBehavior="Manual"
             Background="Transparent"
             BorderBrush="Transparent"
-            DetailsTemplate="{StaticResource DetailsTemplate}"
             ItemsSource="{x:Bind ViewModel.SampleItems}"
             ItemTemplate="{StaticResource ItemTemplate}"
-            ListHeaderTemplate="{StaticResource MinimalListHeaderTemplate}"
-            NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}"
-            SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}"
-            ViewStateChanged="OnViewStateChanged"/>
+            SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}"/>
     </Grid>
 </Page>

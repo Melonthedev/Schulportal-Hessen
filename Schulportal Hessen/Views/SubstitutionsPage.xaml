@@ -4,9 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls" xmlns:sys="using:System"
+    xmlns:toolkit="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        
+
+        <SelectorBar x:Name="SelectorBar2" SelectionChanged="SelectorBar2_SelectionChanged">
+            <SelectorBarItem x:Name="BarItemToday" Text="Today" IsSelected="True" />
+            <SelectorBarItem x:Name="BarItemTomorrow" Text="Tomorrow" />
+        </SelectorBar>
+        <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False" Margin="10 100 10 10"/>
+        <ContentControl x:Name="ViewArea" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </Grid>
 </Page>

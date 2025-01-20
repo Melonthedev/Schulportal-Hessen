@@ -242,4 +242,10 @@
   <data name="Timetable_Friday.Text" xml:space="preserve">
     <value>Friday</value>
   </data>
+  <data name="Shell_FirstSubstitutions.Content" xml:space="preserve">
+    <value>FirstSubstitutions</value>
+  </data>
+  <data name="Shell_SecondSubstitutions.Content" xml:space="preserve">
+    <value>SecondSubstitutions</value>
+  </data>
 </root>
