@@ -65,7 +65,7 @@
                 <!-- TODO: SAVE LOCALLY PERSONAL TIMETABLE WITH CHECKS OF SP TIMETABLE & INFO IF CHANGED (SHOW CHANGES) & ABILITY TO EDIT (REMOVE LATIN EG) & ADD/DEFINE/GET FROM TIMES LUNCH BREAKS -->
 
                 <!-- Timetable -->
-                <Grid x:Name="TimeTableGrid" Margin="0,0,15,0" >
+                <Grid x:Name="TimeTableGrid" Margin="0,0,15,0">
                     <Grid.RowDefinitions>
                         <!-- Erste Zeile für die Kopfzeile (Tage der Woche) -->
                         <RowDefinition Height="auto"/>
@@ -189,9 +189,9 @@
                     </Border>
 
                     <!-- Platzhalter für Fächer -->
-                    <!--<Grid Grid.Row="4" Grid.Column="1" Width="270" >
+                    <!--<Grid Grid.Row="4" Grid.Column="1"  >
                     <FlipView x:Name="FlipView1" VerticalAlignment="Center" Height="120" Background="red">
-                        <FlipViewItem>
+                            <FlipViewItem Width="auto">
                             <Border Background="LightBlue" Padding="30" VerticalAlignment="Center" >
                                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="Math" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
@@ -205,8 +205,8 @@
                                     </StackPanel>
                                 </StackPanel>
                             </Border>
-                        </FlipViewItem>
-                        <FlipViewItem>
+                        </FlipViewItem >
+                            <FlipViewItem Width="auto">
                             <Border Background="LightBlue" Padding="30" VerticalAlignment="Center" >
                                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="Math" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Center"/>
@@ -228,8 +228,8 @@ HorizontalAlignment="Center" VerticalAlignment="Bottom"
 Margin="0, 10, 0, 0"
 NumberOfPages="{Binding ElementName=FlipView1, Path=Items.Count}"
 SelectedPageIndex="{Binding ElementName=FlipView1, Path=SelectedIndex, Mode=TwoWay}" />
-                    </Grid>
-                    
+                    </Grid>-->
+                    <!--
                     <Border Grid.Row="1" Grid.Column="2" Background="LightGreen" CornerRadius="5" Margin="5">
                         <TextBlock Text="History" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>

@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.WinUI.UI;
+﻿using CommunityToolkit.WinUI;
 using Microsoft.UI;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
@@ -49,6 +49,7 @@ public sealed partial class TimetablePage : Page {
             border.Padding = new Thickness(10);
             //border.Margin = new Thickness(5);
             border.VerticalAlignment = VerticalAlignment.Stretch;
+            border.Width = double.NaN;
 
             var container = new StackPanel() {
                 VerticalAlignment = VerticalAlignment.Center,
@@ -128,14 +129,22 @@ public sealed partial class TimetablePage : Page {
                 MaxHeight = 120,
                 Width = double.NaN
             };
+            TimeTableGrid.Children.Add(container);
+
+            container.Children.Add(border);
+            border.Width = double.NaN;
+            var calculatedWidth = border.ActualWidth;
+            Debug.WriteLine(calculatedWidth);
+
+            container.Children.Remove(border);
             var flipView = new FlipView() {
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Background = new SolidColorBrush(Colors.Transparent),
                 Name = "FlipView",
-                MaxWidth = 270,
-                Width = double.NaN,
-                MinWidth = 100
+                //MaxWidth = 270,
+                Width = calculatedWidth,
+                //MinWidth = 100
             };
             var pipsPager = new PipsPager() {
                 VerticalAlignment = VerticalAlignment.Bottom,
@@ -155,13 +164,14 @@ public sealed partial class TimetablePage : Page {
 
             Grid.SetRow(container, hour);
             Grid.SetColumn(container, lesson.Day);
-            TimeTableGrid.Children.Add(container);
+            //TimeTableGrid.Children.Add(container);
         }
 
         var flipViewChild = container.FindChild<FlipView>();
         var pipsPagerChild = container.FindChild<PipsPager>();
         if (flipViewChild == null || pipsPagerChild == null) return;
         flipViewChild.Items.Add(border);
+        
         if (flipViewChild.Items.Count >= 2) {
             pipsPagerChild.NumberOfPages = flipViewChild.Items.Count;
         }

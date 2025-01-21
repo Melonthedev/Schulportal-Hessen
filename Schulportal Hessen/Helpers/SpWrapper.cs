@@ -1,13 +1,6 @@
-﻿using ColorCode.Compilation.Languages;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using Schulportal_Hessen.Models;
 using Schulportal_Hessen.Services;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Schulportal_Hessen.Helpers;
 public class SpWrapper {
@@ -76,8 +69,8 @@ public class SpWrapper {
     public async Task<string?> GetFullNameAsync() {
         var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
 
-        var nachname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[2]/td[2]");
-        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[3]/td[2]");
+        var nachname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[2]/td[2]");
+        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[3]/td[2]");
         if (nachname == null || vorname == null) return null;
         var name = vorname.InnerText.Trim() + " " + nachname.InnerText.Trim();
         return name;
@@ -85,7 +78,7 @@ public class SpWrapper {
 
     public async Task<string?> GetSurNameAsync() {
         var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
-        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[3]/td[2]");
+        var vorname = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[3]/td[2]");
         if (vorname == null) return null;
         var name = vorname.InnerText.Trim();
         return name;
@@ -94,14 +87,14 @@ public class SpWrapper {
 
     public async Task<string?> GetDateOfBirthAsync() {
         var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
-        var dateOfBirth = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[4]/td[2]");
+        var dateOfBirth = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[4]/td[2]");
         if (dateOfBirth == null) return null;
         return dateOfBirth.InnerHtml.Trim();
     }
 
     public async Task<string?> GetSchoolClassAsync() {
         var doc = await GetHtmlAsync("https://start.schulportal.hessen.de/benutzerverwaltung.php?a=userData");
-        var schoolClass = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[4]/div/table/tbody/tr[6]/td[2]");
+        var schoolClass = doc.DocumentNode.SelectSingleNode("//*[@id=\"content\"]/div[2]/div/table/tbody/tr[6]/td[2]");
         if (schoolClass == null) return null;
         return schoolClass.InnerHtml.Trim();
     }
