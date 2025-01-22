@@ -59,7 +59,6 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.241112-preview1" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.241112-preview1" />
     <PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.241112-preview1" />
-	<PackageReference Include="HtmlAgilityPack" Version="1.11.72" />
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
 	<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250109001-experimental2" />
 	<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0-preview2" />

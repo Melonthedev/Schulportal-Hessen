@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Schulportal_Hessen.Models {
-    public class CourseEntry {
+namespace Schulportal_Hessen.API.Models.Courses
+{
+    public class CourseEntry
+    {
         public Guid Id { get; set; }
         public Guid CourseId { get; set; }
         public string Title { get; set; }

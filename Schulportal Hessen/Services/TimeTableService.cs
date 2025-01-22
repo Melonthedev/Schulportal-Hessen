@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Xaml.Media;
+using Schulportal_Hessen.API.Models.Timetable;
 using Schulportal_Hessen.Helpers;
 using Schulportal_Hessen.Models;
 using System;

@@ -66,54 +66,58 @@ public sealed partial class ShellPage : Page {
         }*/
         string primaryBackdropColor = (string)_settingsService.LocalSettings.Values["PrimaryBackdropColor"];
 
+        try {
 
-        switch (selectedSystemBackdrop.ToUpper()) {
-            case "MICA":
-            case "ACRYLIC":
-                MainGrid.Background = null;
-                return;
-            case "SOLID":
-                MainGrid.Background = new SolidColorBrush(ColorHelper.ToColor(primaryBackdropColor));
-                break;
-            case "GRADIENT":
-                MainGrid.Background = new LinearGradientBrush {
-                    StartPoint = new Windows.Foundation.Point(0, 0),
-                    EndPoint = new Windows.Foundation.Point(1, 1),
-                    GradientStops =
-                    {
-                        new GradientStop { Color = ColorHelper.ToColor((string)_settingsService.LocalSettings.Values["PrimaryGradientBackdropColor"]), Offset = 0 },
-                        new GradientStop { Color = ColorHelper.ToColor((string)_settingsService.LocalSettings.Values["SecondaryGradientBackdropColor"]), Offset = 1 }
-                    }
-                };
-                break;
-            case "RAINBOW":
-                MainGrid.Background = new LinearGradientBrush {
-                    StartPoint = new Windows.Foundation.Point(0, 0),
-                    EndPoint = new Windows.Foundation.Point(1, 1),
-                    GradientStops =
-                    {
-                        new GradientStop { Color = Microsoft.UI.Colors.Red, Offset = 0 },
-                        new GradientStop { Color = Microsoft.UI.Colors.OrangeRed, Offset = 0.17 },
-                        new GradientStop { Color = Microsoft.UI.Colors.Yellow, Offset = 0.33 },
-                        new GradientStop { Color = Microsoft.UI.Colors.Green, Offset = 0.5 },
-                        new GradientStop { Color = Microsoft.UI.Colors.Blue, Offset = 0.67 },
-                        new GradientStop { Color = Microsoft.UI.Colors.Indigo, Offset = 0.83 },
-                        new GradientStop { Color = Microsoft.UI.Colors.Violet, Offset = 1 }
-                    },
-                    Opacity = 0.2
-                };
-                break;
-            case "ACCENT":
-                MainGrid.Background = (AcrylicBrush)Application.Current.Resources["AccentAcrylicInAppFillColorBaseBrush"];
-                break;
-            case "IMAGE":
-                MainGrid.Background = new ImageBrush {
-                    ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/graduation.png")),
-                    Stretch = Stretch.UniformToFill
-                };
-                break;
-        };
-        Debug.WriteLine("Applying Backdrop: " + selectedSystemBackdrop);
+            switch (selectedSystemBackdrop.ToUpper()) {
+                case "MICA":
+                case "ACRYLIC":
+                    MainGrid.Background = null;
+                    return;
+                case "SOLID":
+                    MainGrid.Background = new SolidColorBrush(ColorHelper.ToColor(primaryBackdropColor));
+                    break;
+                case "GRADIENT":
+                    MainGrid.Background = new LinearGradientBrush {
+                        StartPoint = new Windows.Foundation.Point(0, 0),
+                        EndPoint = new Windows.Foundation.Point(1, 1),
+                        GradientStops =
+                        {
+                            new GradientStop { Color = ColorHelper.ToColor((string)_settingsService.LocalSettings.Values["PrimaryGradientBackdropColor"]), Offset = 0 },
+                            new GradientStop { Color = ColorHelper.ToColor((string)_settingsService.LocalSettings.Values["SecondaryGradientBackdropColor"]), Offset = 1 }
+                        }
+                    };
+                    break;
+                case "RAINBOW":
+                    MainGrid.Background = new LinearGradientBrush {
+                        StartPoint = new Windows.Foundation.Point(0, 0),
+                        EndPoint = new Windows.Foundation.Point(1, 1),
+                        GradientStops =
+                        {
+                            new GradientStop { Color = Microsoft.UI.Colors.Red, Offset = 0 },
+                            new GradientStop { Color = Microsoft.UI.Colors.OrangeRed, Offset = 0.17 },
+                            new GradientStop { Color = Microsoft.UI.Colors.Yellow, Offset = 0.33 },
+                            new GradientStop { Color = Microsoft.UI.Colors.Green, Offset = 0.5 },
+                            new GradientStop { Color = Microsoft.UI.Colors.Blue, Offset = 0.67 },
+                            new GradientStop { Color = Microsoft.UI.Colors.Indigo, Offset = 0.83 },
+                            new GradientStop { Color = Microsoft.UI.Colors.Violet, Offset = 1 }
+                        },
+                        Opacity = 0.2
+                    };
+                    break;
+                case "ACCENT":
+                    MainGrid.Background = (AcrylicBrush)Application.Current.Resources["AccentAcrylicInAppFillColorBaseBrush"];
+                    break;
+                case "IMAGE":
+                    MainGrid.Background = new ImageBrush {
+                        ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/graduation.png")),
+                        Stretch = Stretch.UniformToFill
+                    };
+                    break;
+            };
+            Debug.WriteLine("Applying Backdrop: " + selectedSystemBackdrop);
+        } catch (Exception) {
+            MainGrid.Background = null;
+        }
     }
 
 

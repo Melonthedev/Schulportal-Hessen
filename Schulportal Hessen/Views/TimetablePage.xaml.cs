@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Schulportal_Hessen.API.Models.Timetable;
 using Schulportal_Hessen.Helpers;
 using Schulportal_Hessen.Models;
 using Schulportal_Hessen.Services;
@@ -44,7 +46,7 @@ public sealed partial class TimetablePage : Page {
         var timeTableLessons = _TimeTableService.GetLessons();
         foreach (var lesson in timeTableLessons) {
             var border = new Border();
-            border.Background = new SolidColorBrush(lesson.Course.Color);
+            border.Background = new SolidColorBrush(ColorUtil.GetWindowsColor(lesson.Course.Color));
             border.CornerRadius = new CornerRadius(5);
             border.Padding = new Thickness(10);
             //border.Margin = new Thickness(5);
@@ -133,8 +135,8 @@ public sealed partial class TimetablePage : Page {
 
             container.Children.Add(border);
             border.Width = double.NaN;
-            var calculatedWidth = border.ActualWidth;
-            Debug.WriteLine(calculatedWidth);
+            var calculatedWidth = Frame.ActualWidth / 6;
+            Debug.WriteLine("Width: " + calculatedWidth);
 
             container.Children.Remove(border);
             var flipView = new FlipView() {

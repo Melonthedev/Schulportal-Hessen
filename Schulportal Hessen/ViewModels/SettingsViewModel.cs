@@ -110,6 +110,11 @@ public partial class SettingsViewModel : ObservableRecipient, INotifyPropertyCha
         _primaryBackdropColor = LocalSettings.Values["PrimaryBackdropColor"] is null ? Microsoft.UI.Colors.DarkBlue : ColorHelper.ToColor((string)LocalSettings.Values["PrimaryBackdropColor"]);
         _primaryGradientBackdropColor = LocalSettings.Values["PrimaryGradientBackdropColor"] is null ? Microsoft.UI.Colors.OrangeRed : ColorHelper.ToColor((string)LocalSettings.Values["PrimaryGradientBackdropColor"]);
         _secondaryGradientBackdropColor = LocalSettings.Values["SecondaryGradientBackdropColor"] is null ? Microsoft.UI.Colors.DarkBlue : ColorHelper.ToColor((string)LocalSettings.Values["SecondaryGradientBackdropColor"]);
+
+        Backdrop = _backdrop;
+        PrimaryBackdropColor = _primaryBackdropColor;
+        PrimaryGradientBackdropColor = _primaryGradientBackdropColor;
+        SecondaryGradientBackdropColor = _secondaryGradientBackdropColor;
     }
 
     private static string GetVersionDescription() {

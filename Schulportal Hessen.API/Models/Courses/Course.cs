@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI;
 
-namespace Schulportal_Hessen.Models {
-    public class Course {
+namespace Schulportal_Hessen.API.Models.Courses {
+    public class Course
+    {
         public Guid Id { get; set; }
         public string DisplayName { get; set; }
         public string Abbreviation { get; set; }

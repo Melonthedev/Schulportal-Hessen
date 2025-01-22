@@ -1,4 +1,6 @@
 ﻿using HtmlAgilityPack;
+using Schulportal_Hessen.API.Models.Courses;
+using Schulportal_Hessen.API.Models.Timetable;
 using Schulportal_Hessen.Models;
 using Schulportal_Hessen.Services;
 
